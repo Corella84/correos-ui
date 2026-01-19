@@ -1,0 +1,188 @@
+import { Page, Text, ResourceList, Card, Badge, Button, Spinner, Banner } from "@shopify/polaris";
+import { useNavigate } from "@remix-run/react";
+import { useEffect, useState } from "react";
+import { getPendingOrders } from "~/services/orders.api";
+
+// Tipos simplificados
+type ReviewStatus = "ready" | "review_required";
+type OrderStatus = "NO_GUIDE" | "GUIDE_CREATED";
+
+interface Order {
+  id: string;
+  customer: string;
+  province: string;
+  status: OrderStatus;
+  reviewStatus: ReviewStatus;
+  orderNumber?: string;
+  correosTracking?: string;
+  // Datos crudos para display
+  rawAddress: string;
+  rawZip: string;
+  rawPhone: string;
+}
+
+// Función pura y segura de cálculo de estado
+function calculateReviewStatus(o: any): ReviewStatus {
+  // CORRECCIÓN 1 (Estricta): Una orden NUNCA está lista si viene cruda de Shopify
+  // porque le faltan los códigos de Cantón/Distrito de Correos.
+  // Esto obliga a pasar por "Revisión" siempre.
+  if (!o.canton_code || !o.district_code) {
+    return "review_required";
+  }
+
+  const phone = String(o.shipping_address?.phone || o.customer?.phone || "").replace(/\D/g, "");
+  if (phone.length < 8) return "review_required";
+
+  return "ready";
+}
+
+export default function OrdersIndex() {
+  const navigate = useNavigate();
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function loadOrders() {
+      try {
+        setLoading(true);
+        const shopifyOrders = await getPendingOrders();
+
+        if (isMounted) {
+          const mappedOrders: Order[] = (shopifyOrders || []).map(o => ({
+            id: String(o.id),
+            customer: o.customer ? `${o.customer.first_name} ${o.customer.last_name}` : "Cliente Desconocido",
+            province: o.shipping_address?.province || "Sin dirección",
+            status: ((o as any).correos_status === "GUIDE_CREATED" ? "GUIDE_CREATED" : "NO_GUIDE"),
+            reviewStatus: calculateReviewStatus(o),
+            orderNumber: o.name,
+            correosTracking: (o as any).correos_tracking,
+            rawAddress: o.shipping_address?.address1 || "",
+            rawZip: o.shipping_address?.zip || "",
+            rawPhone: o.shipping_address?.phone || o.customer?.phone || ""
+          }));
+
+          // Ordenar: Primero las que requieren revisión, luego listas, al final las completadas
+          mappedOrders.sort((a, b) => {
+            if (a.status === "GUIDE_CREATED" && b.status !== "GUIDE_CREATED") return 1;
+            if (a.status !== "GUIDE_CREATED" && b.status === "GUIDE_CREATED") return -1;
+            if (a.reviewStatus === "review_required" && b.reviewStatus !== "review_required") return -1;
+            if (a.reviewStatus !== "review_required" && b.reviewStatus === "review_required") return 1;
+            return 0;
+          });
+
+          setOrders(mappedOrders);
+        }
+      } catch (err) {
+        console.error("Error cargando órdenes:", err);
+        if (isMounted) setError("Error de conexión al cargar órdenes.");
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    }
+
+    loadOrders();
+
+    return () => { isMounted = false; };
+  }, []);
+
+  if (loading) {
+    return (
+      <Page title="Órdenes Pendientes">
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
+          <Spinner size="large" />
+        </div>
+      </Page>
+    );
+  }
+
+  return (
+    <Page title="Órdenes Pendientes" subtitle={`${orders.length} órdenes`}>
+      {error && (
+        <Banner tone="critical" onDismiss={() => setError(null)}>
+          {error}
+        </Banner>
+      )}
+
+      <Card>
+        <ResourceList
+          resourceName={{ singular: "orden", plural: "órdenes" }}
+          items={orders}
+          renderItem={(item) => {
+            const { id, customer, province, status, reviewStatus, orderNumber } = item;
+
+            const isReady = reviewStatus === "ready";
+            const isCompleted = status === "GUIDE_CREATED";
+            const isCritical = !isCompleted && !isReady;
+
+            return (
+              <ResourceList.Item
+                id={id}
+                onClick={() => navigate(`/orders/${id}/review`)}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", flexWrap: "wrap", gap: "1rem" }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", flex: 1 }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                      <Text as="p" variant="bodyMd" fontWeight="bold">
+                        {orderNumber || `Orden ${id}`}
+                      </Text>
+
+                      {isCompleted ? (
+                        <Badge tone="success">Guía Creada</Badge>
+                      ) : isCritical ? (
+                        <Badge tone="critical">Revisión Obligatoria</Badge>
+                      ) : (
+                        <Badge tone="success">Lista para procesar</Badge>
+                      )}
+                    </div>
+
+                    <Text as="p" variant="bodySm" tone="subdued">
+                      {customer} • {province}
+                    </Text>
+
+                    {/* Feedback visual si faltan datos */}
+                    {isCritical && (
+                      <Text as="span" variant="bodySm" tone="critical">
+                        Faltan Distrito/Cantón (Correos)
+                      </Text>
+                    )}
+                  </div>
+
+                  <div>
+                    {/* Botones de acción */}
+                    <div onClick={(e) => e.stopPropagation()}>
+                      {isCompleted ? (
+                        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                          <Button onClick={() => {
+                            const params = new URLSearchParams({
+                              numero: item.correosTracking || "CR-Unknown",
+                              orden: item.orderNumber || id,
+                              cliente: customer,
+                              // Fecha aproximada si no viene del backend, solo para display (opcional)
+                              fecha: new Date().toISOString()
+                            });
+                            navigate(`/orders/${id}/result?${params.toString()}`);
+                          }}>Ver / Descargar PDF</Button>
+                        </div>
+                      ) : (
+                        <Button
+                          variant={isReady ? "primary" : undefined}
+                          tone={isCritical ? "critical" : undefined}
+                          onClick={() => navigate(`/orders/${id}/review`)}
+                        >
+                          {isCritical ? "Revisar dirección" : "Generar guía"}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </ResourceList.Item>
+            );
+          }}
+        />
+      </Card>
+    </Page>
+  );
+}
