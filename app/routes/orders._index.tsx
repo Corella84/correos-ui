@@ -5,7 +5,7 @@ import { getPendingOrders } from "~/services/orders.api";
 
 // Tipos simplificados
 type ReviewStatus = "ready" | "review_required";
-type OrderStatus = "NO_GUIDE" | "GUIDE_CREATED";
+type OrderStatus = "NO_GUIDE" | "GUIDE_CREATED" | "PROCESSING";
 
 interface Order {
   id: string;
@@ -55,7 +55,7 @@ export default function OrdersIndex() {
             id: String(o.id),
             customer: o.customer ? `${o.customer.first_name} ${o.customer.last_name}` : "Cliente Desconocido",
             province: o.shipping_address?.province || "Sin dirección",
-            status: ((o as any).correos_status === "GUIDE_CREATED" ? "GUIDE_CREATED" : "NO_GUIDE"),
+            status: ((o as any).correos_status === "GUIDE_CREATED" ? "GUIDE_CREATED" : (o as any).correos_status === "PROCESSING" ? "PROCESSING" : "NO_GUIDE"),
             reviewStatus: calculateReviewStatus(o),
             orderNumber: o.name,
             correosTracking: (o as any).correos_tracking,
@@ -120,7 +120,12 @@ export default function OrdersIndex() {
             return (
               <ResourceList.Item
                 id={id}
-                onClick={() => navigate(`/orders/${id}/review`)}
+                onClick={() => {
+                  // Bloquear navegación a review si ya tiene guía
+                  if (!isCompleted) {
+                    navigate(`/orders/${id}/review`);
+                  }
+                }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", flexWrap: "wrap", gap: "1rem" }}>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", flex: 1 }}>
@@ -131,6 +136,8 @@ export default function OrdersIndex() {
 
                       {isCompleted ? (
                         <Badge tone="success">Guía Creada</Badge>
+                      ) : item.status === "PROCESSING" ? (
+                        <Badge tone="info">En proceso...</Badge>
                       ) : isCritical ? (
                         <Badge tone="critical">Revisión Obligatoria</Badge>
                       ) : (
@@ -160,12 +167,18 @@ export default function OrdersIndex() {
                               numero: item.correosTracking || "CR-Unknown",
                               orden: item.orderNumber || id,
                               cliente: customer,
-                              // Fecha aproximada si no viene del backend, solo para display (opcional)
                               fecha: new Date().toISOString()
                             });
                             navigate(`/orders/${id}/result?${params.toString()}`);
                           }}>Ver / Descargar PDF</Button>
+                          <Button
+                            url="https://sucursal.correos.go.cr/web/rastreo"
+                            external
+                            variant="plain"
+                          >Ver seguimiento</Button>
                         </div>
+                      ) : item.status === "PROCESSING" ? (
+                        <Button disabled>Generando guía...</Button>
                       ) : (
                         <Button
                           variant={isReady ? "primary" : undefined}

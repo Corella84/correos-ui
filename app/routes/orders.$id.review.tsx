@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "@remix-run/react";
 import { startTransition, useEffect, useMemo, useRef, useState } from "react";
 import { costaRica, getCantonesByProvincia, getDistritosByCanton, validarCodigoPostal } from "~/data/costaRica";
 import { getProvincias, getCantones, getDistritos } from "~/services/correos.api";
-import { getOrderById, type ShopifyOrder } from "~/services/orders.api";
+import { getOrderById, getCorreosStatus, type ShopifyOrder } from "~/services/orders.api";
 
 interface OrderReviewData {
   orderId: string;
@@ -56,6 +56,8 @@ export default function OrderReview() {
   const [orderData, setOrderData] = useState<OrderReviewData | null>(null);
   const [loadingOrder, setLoadingOrder] = useState(true);
   const [errorOrder, setErrorOrder] = useState<string | null>(null);
+  const [guideAlreadyCreated, setGuideAlreadyCreated] = useState(false);
+  const [trackingNumber, setTrackingNumber] = useState<string | null>(null);
 
   // Inicializar formData vacío, se llenará cuando cargue la orden
   const [formData, setFormData] = useState<CorreosAddressForm>({
@@ -68,15 +70,39 @@ export default function OrderReview() {
     nombre: "",
   });
 
-  // Efecto para cargar datos reales de Shopify
+  // Efecto para cargar datos reales
   useEffect(() => {
     async function fetchOrder() {
       try {
         setLoadingOrder(true);
+
+        // PASO 1: Consultar fuente de verdad (processed_orders.json via endpoint)
+        console.log("[REVIEW] Step 1: Checking correos status for orderId:", orderId);
+        const correosStatus = await getCorreosStatus(orderId);
+        console.log("[REVIEW] Correos status result:", correosStatus);
+
+        if (correosStatus && correosStatus.status === "GUIDE_CREATED") {
+          // Orden ya procesada - mostrar pantalla informativa
+          console.log("[REVIEW] Order has GUIDE_CREATED, showing info screen");
+          setGuideAlreadyCreated(true);
+          setTrackingNumber(correosStatus.tracking_number);
+          setLoadingOrder(false);
+          return; // NO llamar a Shopify
+        }
+
+        // PASO 2: Si no está procesada, cargar desde Shopify
         const shopifyOrder = await getOrderById(orderId);
 
         if (!shopifyOrder) {
           setErrorOrder("Orden no encontrada en Shopify.");
+          setLoadingOrder(false);
+          return;
+        }
+
+        // Verificación adicional por si el backend tiene estado actualizado
+        if ((shopifyOrder as any).correos_status === "GUIDE_CREATED") {
+          setGuideAlreadyCreated(true);
+          setTrackingNumber((shopifyOrder as any).correos_tracking || null);
           setLoadingOrder(false);
           return;
         }
@@ -352,6 +378,72 @@ export default function OrderReview() {
       <Page title="Cargando orden...">
         <div style={{ display: 'flex', justifyContent: 'center', padding: '2rem' }}>
           <Spinner size="large" />
+        </div>
+      </Page>
+    );
+  }
+
+  // Pantalla informativa para órdenes con guía ya creada
+  if (guideAlreadyCreated) {
+    return (
+      <Page
+        title="Orden Ya Procesada"
+        backAction={{
+          content: "Volver a órdenes",
+          onAction: () => navigate("/orders"),
+        }}
+      >
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <Banner tone="success">
+            <Text as="p" variant="bodyMd" fontWeight="semibold">
+              Esta orden ya tiene una guía generada y no puede ser editada.
+            </Text>
+          </Banner>
+
+          <Card>
+            <div style={{ padding: "1.5rem" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <Text as="h2" variant="headingMd" fontWeight="semibold">
+                  Información de la Guía
+                </Text>
+                {trackingNumber && (
+                  <div>
+                    <Text as="p" variant="bodySm" tone="subdued">Número de Guía</Text>
+                    <Text as="p" variant="bodyLg" fontWeight="semibold">{trackingNumber}</Text>
+                  </div>
+                )}
+                <Text as="p" variant="bodySm" tone="subdued">
+                  La guía fue generada exitosamente. Usa los botones a continuación para ver o descargar el PDF.
+                </Text>
+              </div>
+            </div>
+          </Card>
+
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+            <Button
+              variant="primary"
+              onClick={() => {
+                const params = new URLSearchParams({
+                  numero: trackingNumber || "CR-Unknown",
+                  orden: orderId,
+                  cliente: "Cliente",
+                  fecha: new Date().toISOString()
+                });
+                navigate(`/orders/${orderId}/result?${params.toString()}`);
+              }}
+            >
+              Ver / Descargar PDF
+            </Button>
+            <Button
+              url="https://sucursal.correos.go.cr/web/rastreo"
+              external
+            >
+              Ver seguimiento
+            </Button>
+            <Button onClick={() => navigate("/orders")}>
+              Volver a órdenes
+            </Button>
+          </div>
         </div>
       </Page>
     );

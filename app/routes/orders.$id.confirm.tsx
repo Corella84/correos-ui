@@ -91,7 +91,7 @@ export default function OrderConfirm() {
       senas: senas,
     },
     orderDetails: {
-      orderNumber: `SH-${orderId}`,
+      orderNumber: `TM-${orderId}`,
     },
   };
 
@@ -107,23 +107,18 @@ export default function OrderConfirm() {
 
     try {
       // FASE 5.2: Payload real construido desde datos del formulario
-      // Remitente fijo según especificación
       const remitenteDireccion = "Alajuela, Grecia, 800 este de la Universidad Latina";
-      const remitenteCodigoPostal = "20301"; // Código postal de Grecia, Alajuela (según catálogo)
-
-      // Construir dirección completa del destinatario usando nombres del catálogo
+      const remitenteCodigoPostal = "20301";
       const destinatarioDireccion = `${senas}, ${distritoNombre}, ${cantonNombre}, ${provinciaNombre}`;
 
-      // Payload según contrato SolicitudGuia V2
-      // Usamos el número de orden visible (ej: #1024) para las observaciones
       const payload = {
-        orden_id: confirmData.orderDetails?.orderNumber || orderId,
+        orden_id: `TM-${orderId}`,
         destinatario: {
           nombre_completo: clienteNombre,
           telefono: telefono,
-          email: "", // Opcional, podría pasarse por URL si se requiere
+          email: "",
         },
-        direccion_original: "Dirección original de Shopify", // Valor informativo
+        direccion_original: "Dirección original de Shopify",
         direccion_corregida: {
           codigo_postal: codigoPostal,
           provincia_codigo: provinciaCodigo,
@@ -138,46 +133,64 @@ export default function OrderConfirm() {
         monto_flete: 0.0,
       };
 
-      // Fetch real al backend local
-      const response = await fetch("http://localhost:8000/generar_guia", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
+      // FIX HIGH #3: Timeout de 30 segundos
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      const data = await response.json();
+      try {
+        const response = await fetch("http://localhost:8000/generar_guia", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        });
 
-      if (!response.ok) {
-        // Si el backend retorna error HTTP
-        setError(data.detail?.error || data.error || "Error al generar la guía");
-        setIsLoading(false);
-        return;
-      }
+        clearTimeout(timeoutId);
 
-      // Verificar respuesta según nuevo contrato RespuestaGuia V2 (Backend actualizado)
-      if (data.status === "exito" && data.guia?.tracking_number) {
-        // Navegar a result con los datos de la guía generada
-        const resultData = {
-          status: "SUCCESS" as const,
-          numeroGuia: data.guia.tracking_number,
-          fechaGeneracion: new Date().toISOString(),
-          orderNumber: confirmData.orderDetails?.orderNumber || orderId,
-          customerName: confirmData.destinatario.nombre,
-        };
+        const data = await response.json();
 
-        // Pasar datos via URL params
-        navigate(
-          `/orders/${orderId}/result?numero=${resultData.numeroGuia}&fecha=${encodeURIComponent(resultData.fechaGeneracion)}&orden=${resultData.orderNumber}&cliente=${encodeURIComponent(resultData.customerName)}`
-        );
-      } else {
-        const errorMsg = data.mensaje || data.detalle_error || "Error desconocido al generar la guía";
-        setError(`Error del servicio: ${errorMsg}`);
+        if (!response.ok) {
+          // FIX BLOCKER #2: Detectar error 409 (duplicado)
+          if (response.status === 409) {
+            setError("Esta orden ya tiene una guía generada. Refrescando lista...");
+            setTimeout(() => navigate("/orders"), 2000);
+            return;
+          }
+          setError(data.detail?.error || data.error || "Error al generar la guía");
+          setIsLoading(false);
+          return;
+        }
+
+        // Verificar respuesta según contrato
+        if (data.status === "exito" && data.guia?.tracking_number) {
+          const resultData = {
+            status: "SUCCESS" as const,
+            numeroGuia: data.guia.tracking_number,
+            fechaGeneracion: new Date().toISOString(),
+            orderNumber: confirmData.orderDetails?.orderNumber || orderId,
+            customerName: confirmData.destinatario.nombre,
+          };
+
+          navigate(
+            `/orders/${orderId}/result?numero=${resultData.numeroGuia}&fecha=${encodeURIComponent(resultData.fechaGeneracion)}&orden=${resultData.orderNumber}&cliente=${encodeURIComponent(resultData.customerName)}`
+          );
+        } else {
+          const errorMsg = data.mensaje || data.detalle_error || "Error desconocido al generar la guía";
+          setError(`Error del servicio: ${errorMsg}`);
+          setIsLoading(false);
+        }
+      } catch (fetchErr) {
+        clearTimeout(timeoutId);
+        if (fetchErr instanceof Error && fetchErr.name === 'AbortError') {
+          setError("Timeout – intentá en 1 minuto");
+        } else {
+          throw fetchErr;
+        }
         setIsLoading(false);
       }
     } catch (err) {
-      // Manejar errores de red o conexión
       if (err instanceof TypeError && err.message.includes("fetch")) {
         setError("No se pudo conectar con el backend. Verifica que esté corriendo en http://localhost:8000");
       } else {
@@ -276,7 +289,7 @@ export default function OrderConfirm() {
               {confirmData.orderDetails?.orderNumber && (
                 <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid #e1e3e5" }}>
                   <Text as="p" variant="bodySm" tone="subdued">
-                    Orden Shopify: {confirmData.orderDetails.orderNumber}
+                    Orden: {confirmData.orderDetails.orderNumber}
                   </Text>
                 </div>
               )}
