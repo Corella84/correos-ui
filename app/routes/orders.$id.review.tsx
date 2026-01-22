@@ -1,9 +1,9 @@
 import { Page, Text, Card, TextField, Select, Banner, Button, Spinner } from "@shopify/polaris";
 import { useNavigate, useParams } from "@remix-run/react";
-import { startTransition, useEffect, useMemo, useRef, useState } from "react";
-import { costaRica, getCantonesByProvincia, getDistritosByCanton, validarCodigoPostal } from "~/data/costaRica";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { costaRica, getCantonesByProvincia, getDistritosByCanton } from "~/data/costaRica";
 import { getProvincias, getCantones, getDistritos } from "~/services/correos.api";
-import { getOrderById, getCorreosStatus, type ShopifyOrder } from "~/services/orders.api";
+import { getOrderById, getCorreosStatus } from "~/services/orders.api";
 
 interface OrderReviewData {
   orderId: string;
@@ -44,7 +44,7 @@ export default function OrderReview() {
   const params = useParams();
   const orderId = params.id || "";
 
-  // FIX: Ref para bloquear efecto rebote (doble inicialización)
+  // Ref para bloquear efecto rebote (doble inicialización)
   const formInitialized = useRef(false);
 
   // Resetear lock si cambiamos de orden
@@ -82,12 +82,11 @@ export default function OrderReview() {
         console.log("[REVIEW] Correos status result:", correosStatus);
 
         if (correosStatus && correosStatus.status === "GUIDE_CREATED") {
-          // Orden ya procesada - mostrar pantalla informativa
           console.log("[REVIEW] Order has GUIDE_CREATED, showing info screen");
           setGuideAlreadyCreated(true);
           setTrackingNumber(correosStatus.tracking_number);
           setLoadingOrder(false);
-          return; // NO llamar a Shopify
+          return;
         }
 
         // PASO 2: Si no está procesada, cargar desde Shopify
@@ -99,7 +98,6 @@ export default function OrderReview() {
           return;
         }
 
-        // Verificación adicional por si el backend tiene estado actualizado
         if ((shopifyOrder as any).correos_status === "GUIDE_CREATED") {
           setGuideAlreadyCreated(true);
           setTrackingNumber((shopifyOrder as any).correos_tracking || null);
@@ -107,12 +105,11 @@ export default function OrderReview() {
           return;
         }
 
-        // Función helper local para limpiar teléfonos (eliminar +506 y no numéricos)
         const cleanPhone = (phone: string | undefined | null) => {
           if (!phone) return "";
-          let cleaned = phone.replace(/\D/g, ""); // Solo dígitos
+          let cleaned = phone.replace(/\D/g, "");
           if (cleaned.startsWith("506") && cleaned.length > 8) {
-            cleaned = cleaned.substring(3); // Quitar prefijo 506 si sobra
+            cleaned = cleaned.substring(3);
           }
           return cleaned;
         };
@@ -120,7 +117,6 @@ export default function OrderReview() {
         const rawPhone = shopifyOrder.shipping_address?.phone || shopifyOrder.customer?.phone || "";
         const cleanedPhone = cleanPhone(rawPhone);
 
-        // Mapear datos de Shopify a nuestra estructura interna
         const mappedData: OrderReviewData = {
           orderId: String(shopifyOrder.id),
           originalAddress: {
@@ -141,7 +137,7 @@ export default function OrderReview() {
 
         setOrderData(mappedData);
 
-        // Inferir provincia desde el nombre (ej: "San Jose" -> "1")
+        // Inferir provincia desde el nombre
         let provinciaInferida = "";
         if (mappedData.originalAddress.province) {
           const provinciaEncontrada = costaRica.find(
@@ -179,190 +175,141 @@ export default function OrderReview() {
     }
   }, [orderId]);
 
-
-  // ELIMINADO: useEffect que reinicializaba constantemente
-  // El formData ya se inicializa correctamente en el useState
-  // No necesitamos un useEffect que lo pise
-
   // ============================================================================
-  // DATOS DINÁMICOS DE LA API DE CORREOS
+  // DATOS DINÁMICOS - API DE CORREOS CON FALLBACK LOCAL
   // ============================================================================
   const [provinciasAPI, setProvinciasAPI] = useState<Array<{ codigo: string, nombre: string }>>([]);
   const [cantonesAPI, setCantonesAPI] = useState<Array<{ codigo: string, nombre: string }>>([]);
   const [distritosAPI, setDistritosAPI] = useState<Array<{ codigo: string, nombre: string, codigoPostal: string }>>([]);
-  const [loadingProvincias, setLoadingProvincias] = useState(false);
+  const [loadingProvincias, setLoadingProvincias] = useState(true);
   const [loadingCantones, setLoadingCantones] = useState(false);
   const [loadingDistritos, setLoadingDistritos] = useState(false);
 
-  // Cargar provincias al montar el componente (solo en cliente)
+  // Cargar provincias al montar
   useEffect(() => {
-    if (typeof window === 'undefined') return; // Solo ejecutar en el navegador
+    let cancelled = false;
+    setLoadingProvincias(true);
 
-    async function loadProvincias() {
-      setLoadingProvincias(true);
-      try {
-        const provincias = await getProvincias();
-        setProvinciasAPI(provincias);
-        console.log("✅ Provincias cargadas desde API:", provincias.length);
-      } catch (error) {
-        console.error("❌ Error cargando provincias, usando fallback estático");
-      } finally {
-        setLoadingProvincias(false);
-      }
-    }
-    loadProvincias();
+    getProvincias()
+      .then(data => {
+        if (!cancelled) {
+          setProvinciasAPI(data);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingProvincias(false);
+        }
+      });
+
+    return () => { cancelled = true; };
   }, []);
 
-  // Cargar cantones cuando cambia la provincia (solo en cliente)
+  // Cargar cantones cuando cambia provincia
   useEffect(() => {
-    if (typeof window === 'undefined') return; // Solo ejecutar en el navegador
-
     if (!formData.provincia) {
       setCantonesAPI([]);
       return;
     }
 
-    async function loadCantones() {
-      setLoadingCantones(true);
-      try {
-        const cantones = await getCantones(formData.provincia);
-        setCantonesAPI(cantones);
-        console.log(`✅ Cantones cargados para provincia ${formData.provincia}:`, cantones.length);
-      } catch (error) {
-        console.error("❌ Error cargando cantones");
-        setCantonesAPI([]);
-      } finally {
-        setLoadingCantones(false);
-      }
-    }
-    loadCantones();
+    let cancelled = false;
+    setLoadingCantones(true);
+
+    getCantones(formData.provincia)
+      .then(data => {
+        if (!cancelled) {
+          setCantonesAPI(data);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingCantones(false);
+        }
+      });
+
+    return () => { cancelled = true; };
   }, [formData.provincia]);
 
-  // Cargar distritos cuando cambia el cantón (solo en cliente)
+  // Cargar distritos cuando cambia cantón
   useEffect(() => {
-    if (typeof window === 'undefined') return; // Solo ejecutar en el navegador
-
     if (!formData.provincia || !formData.canton) {
       setDistritosAPI([]);
       return;
     }
 
-    async function loadDistritos() {
-      setLoadingDistritos(true);
-      try {
-        const distritos = await getDistritos(formData.provincia, formData.canton);
-        setDistritosAPI(distritos);
-        console.log(`✅ Distritos cargados para provincia ${formData.provincia}, canton ${formData.canton}:`, distritos.length);
-      } catch (error) {
-        console.error("❌ Error cargando distritos");
-        setDistritosAPI([]);
-      } finally {
-        setLoadingDistritos(false);
-      }
-    }
-    loadDistritos();
+    let cancelled = false;
+    setLoadingDistritos(true);
+
+    getDistritos(formData.provincia, formData.canton)
+      .then(data => {
+        if (!cancelled) {
+          setDistritosAPI(data);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingDistritos(false);
+        }
+      });
+
+    return () => { cancelled = true; };
   }, [formData.provincia, formData.canton]);
 
-  // DEBUG: Log en cada render
-  console.log("🔴 RENDER - formData.provincia:", formData.provincia);
-  console.log("🔴 RENDER - orderId:", orderId);
-
-  // Obtener opciones dinámicas según selección
-  // Asegurar que todos los values sean strings explícitamente
+  // Opciones para selects - API primero, fallback local
   const provinciasOptions = useMemo(() => {
-    // Priorizar datos de API, fallback a datos estáticos si aún no cargó
     const source = provinciasAPI.length > 0 ? provinciasAPI : costaRica;
     return source.map((p) => ({
       label: p.nombre,
-      value: String(p.codigo), // Forzar string explícito
+      value: String(p.codigo),
     }));
   }, [provinciasAPI]);
 
   const cantonesOptions = useMemo(() => {
     if (!formData.provincia) return [];
 
-    // Priorizar datos de API, fallback a datos estáticos si aún no cargó
-    const cantones = cantonesAPI.length > 0
-      ? cantonesAPI
-      : getCantonesByProvincia(formData.provincia);
+    const source = cantonesAPI.length > 0 ? cantonesAPI : getCantonesByProvincia(formData.provincia);
 
-    // Agregar opción placeholder al inicio
-    const options = [
+    return [
       { label: "Seleccione un cantón...", value: "" },
-      ...cantones.map((c) => ({
+      ...source.map((c) => ({
         label: c.nombre,
-        value: String(c.codigo), // Forzar string explícito
+        value: String(c.codigo),
       }))
     ];
-
-    return options;
   }, [formData.provincia, cantonesAPI]);
 
   const distritosOptions = useMemo(() => {
     if (!formData.provincia || !formData.canton) return [];
 
-    // Priorizar datos de API, fallback a datos estáticos si aún no cargó
-    const distritos = distritosAPI.length > 0
-      ? distritosAPI
-      : getDistritosByCanton(formData.provincia, formData.canton);
+    const source = distritosAPI.length > 0 ? distritosAPI : getDistritosByCanton(formData.provincia, formData.canton);
 
-    // Agregar opción placeholder al inicio
-    const options = [
+    return [
       { label: "Seleccione un distrito...", value: "" },
-      ...distritos.map((d) => ({
+      ...source.map((d) => ({
         label: d.nombre,
-        value: String(d.codigo), // Forzar string explícito
+        value: String(d.codigo),
       }))
     ];
-
-    return options;
   }, [formData.provincia, formData.canton, distritosAPI]);
 
-  // ============================================================================
-  // ELIMINADAS: Variables de validación intermedias (provinciaValida, cantonValido, distritoValido)
-  // ============================================================================
-  // REGLA: Los Selects usan directamente formData (fuente de verdad del usuario)
-  // No hay validación intermedia que pueda interferir con la edición humana
-  // ============================================================================
-
-  // ============================================================================
-  // ELIMINADOS: useEffects que re-infieren o recalculan valores
-  // ============================================================================
-  // REGLA: Una vez que el usuario interactúa, el sistema NO vuelve a inferir.
-  // Los valores inválidos se manejan en el onChange del Select (resetear dependientes).
-  // ============================================================================
-
-  // ============================================================================
-  // VALIDACIÓN: El ZIP solo VALIDA (muestra alerta), NO cambia selects
-  // ============================================================================
-  // REGLA: Si el ZIP no concuerda con la selección geográfica:
-  // → Mostrar alerta visual
-  // → NO cambiar automáticamente provincia/cantón/distrito
-  // → El usuario decide si corregir el ZIP o la selección geográfica
-  // ============================================================================
+  // Validación ZIP
   const zipMismatch = useMemo(() => {
     if (formData.codigoPostal.length !== 5 || !formData.provincia || !formData.canton || !formData.distrito) {
       return false;
     }
 
-    // Calcular el ZIP esperado basado en la selección geográfica
-    // Formato: PCCDD (Provincia + Cantón + Distrito)
     const p = formData.provincia.padStart(1, '0');
     const cc = formData.canton.padStart(2, '0');
     const dd = formData.distrito.padStart(2, '0');
     const zipEsperado = `${p}${cc}${dd}`;
 
-    // Comparar con el ZIP ingresado
     return formData.codigoPostal !== zipEsperado;
   }, [formData.codigoPostal, formData.provincia, formData.canton, formData.distrito]);
 
-  // Mock: Determinar si hay problemas de validación del backend
   const hasZipMismatchBackend = orderData?.validationIssues?.some(
     (issue) => issue.type === "ZIP_MISMATCH"
   ) || false;
 
-  // Validación del formulario: verificar que todos los campos requeridos estén completos
-  // Usa formData directamente (fuente de verdad del usuario)
   const isFormValid = formData.codigoPostal.length === 5 &&
     formData.provincia &&
     formData.canton &&
@@ -370,8 +317,6 @@ export default function OrderReview() {
     formData.senas.length > 0 &&
     formData.telefono.length >= 8 &&
     formData.nombre.length > 0;
-
-  console.log("OrderReview formData.provincia:", formData.provincia);
 
   if (loadingOrder) {
     return (
@@ -383,7 +328,6 @@ export default function OrderReview() {
     );
   }
 
-  // Pantalla informativa para órdenes con guía ya creada
   if (guideAlreadyCreated) {
     return (
       <Page
@@ -464,6 +408,10 @@ export default function OrderReview() {
     );
   }
 
+  if (typeof window === "undefined") {
+    return null;
+  }
+
   return (
     <Page
       title="Revisión de Dirección"
@@ -473,7 +421,6 @@ export default function OrderReview() {
       }}
     >
       <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        {/* ESTADO: Banner de validación según problemas detectados */}
         {hasZipMismatchBackend && (
           <Banner tone="warning">
             <Text as="p" variant="bodyMd">
@@ -490,7 +437,6 @@ export default function OrderReview() {
           </Banner>
         )}
 
-        {/* Otros estados de validación */}
         {formData.codigoPostal.length > 0 && formData.codigoPostal.length < 5 && (
           <Banner tone="critical">
             <Text as="p" variant="bodyMd">
@@ -560,27 +506,24 @@ export default function OrderReview() {
                 />
 
                 <Select
-                  label={loadingProvincias ? "Provincia (Cargando desde API...)" : "Provincia"}
+                  label={loadingProvincias ? "Provincia (Cargando...)" : "Provincia"}
                   options={provinciasOptions}
                   value={String(formData.provincia || "")}
                   disabled={loadingProvincias}
                   onChange={(value) => {
                     const nuevaProvincia = value ? String(value) : "";
-                    setFormData((prev) => {
-                      const newState = {
-                        ...prev,
-                        provincia: nuevaProvincia,
-                        canton: "",
-                        distrito: "",
-                      };
-                      return newState;
-                    });
+                    setFormData((prev) => ({
+                      ...prev,
+                      provincia: nuevaProvincia,
+                      canton: "",
+                      distrito: "",
+                    }));
                   }}
                 />
 
                 <Select
-                  label={loadingCantones ? "Cantón (Cargando desde API...)" : "Cantón"}
-                  options={cantonesOptions.length > 0 ? cantonesOptions : [{ label: loadingCantones ? "Cargando..." : "Seleccione una provincia primero", value: "" }]}
+                  label={loadingCantones ? "Cantón (Cargando...)" : "Cantón"}
+                  options={cantonesOptions.length > 0 ? cantonesOptions : [{ label: "Seleccione una provincia primero", value: "" }]}
                   value={formData.canton || ""}
                   onChange={(value) => {
                     setFormData((prev) => ({
@@ -593,8 +536,8 @@ export default function OrderReview() {
                 />
 
                 <Select
-                  label={loadingDistritos ? "Distrito (Cargando desde API...)" : "Distrito"}
-                  options={distritosOptions.length > 0 ? distritosOptions : [{ label: loadingDistritos ? "Cargando..." : "Seleccione un cantón primero", value: "" }]}
+                  label={loadingDistritos ? "Distrito (Cargando...)" : "Distrito"}
+                  options={distritosOptions.length > 0 ? distritosOptions : [{ label: "Seleccione un cantón primero", value: "" }]}
                   value={formData.distrito || ""}
                   onChange={(value) => {
                     let nuevoZip = formData.codigoPostal;
@@ -646,7 +589,6 @@ export default function OrderReview() {
             variant="primary"
             disabled={!isFormValid}
             onClick={() => {
-              // Pasar datos del formulario a confirmación via URL params
               const params = new URLSearchParams({
                 codigoPostal: formData.codigoPostal,
                 provincia: formData.provincia,

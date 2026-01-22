@@ -98,13 +98,21 @@ export default function OrdersIndex() {
     );
   }
 
+  if (error) {
+    return (
+      <Page title="Órdenes Pendientes">
+        <Banner tone="critical">
+          <Text as="p" variant="bodyMd">{error}</Text>
+        </Banner>
+        <div style={{ marginTop: '1rem' }}>
+          <Button onClick={() => window.location.reload()}>Reintentar</Button>
+        </div>
+      </Page>
+    );
+  }
+
   return (
     <Page title="Órdenes Pendientes" subtitle={`${orders.length} órdenes`}>
-      {error && (
-        <Banner tone="critical" onDismiss={() => setError(null)}>
-          {error}
-        </Banner>
-      )}
 
       <Card>
         <ResourceList

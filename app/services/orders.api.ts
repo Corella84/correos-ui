@@ -58,7 +58,7 @@ export async function getPendingOrders(): Promise<ShopifyOrder[]> {
             throw new Error("Timeout – intentá en 1 minuto");
         }
         console.error("Failed to fetch pending orders:", error);
-        return [];
+        throw new Error("Error de conexión al cargar órdenes");
     }
 }
 
@@ -77,7 +77,7 @@ export async function getOrderById(orderId: string): Promise<ShopifyOrder | null
             throw new Error("Timeout – intentá en 1 minuto");
         }
         console.error(`Failed to fetch order ${orderId}:`, error);
-        return null;
+        throw new Error("Error al cargar la orden");
     }
 }
 
