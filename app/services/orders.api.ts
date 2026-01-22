@@ -1,4 +1,7 @@
 32
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+3const BACKEND_URL = "http://localhost:8000";4
+    2
 const BACKEND_URL = "http://localhost:8000";    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 export interface ShopifyOrder {
     id: number;
