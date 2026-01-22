@@ -31,9 +31,9 @@ export interface SingleOrderResponse {
     order: ShopifyOrder;
 }
 
-const BACKEND_URL = "http://localhost:8000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 
-// FIX HIGH #3: Helper timeout
+// Helper para timeout en requests HTTP
 function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs: number = 30000): Promise<Response> {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
