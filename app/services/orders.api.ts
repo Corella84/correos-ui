@@ -1,3 +1,5 @@
+32
+const BACKEND_URL = "http://localhost:8000";    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
 export interface ShopifyOrder {
     id: number;
     name: string; // ej: "#1024"
