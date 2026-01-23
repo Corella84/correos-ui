@@ -138,7 +138,11 @@ export default function OrderConfirm() {
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
       try {
-        const response = await fetch("http://localhost:8000/generar_guia", {
+        const backendUrl = typeof window !== 'undefined'
+          ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
+          : (process.env.VITE_BACKEND_URL || "http://localhost:8000");
+
+        const response = await fetch(`${backendUrl}/generar_guia`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -192,7 +196,7 @@ export default function OrderConfirm() {
       }
     } catch (err) {
       if (err instanceof TypeError && err.message.includes("fetch")) {
-        setError("No se pudo conectar con el backend. Verifica que esté corriendo en http://localhost:8000");
+        setError("No se pudo conectar con el backend. Verifica la conexión.");
       } else {
         setError(
           err instanceof Error

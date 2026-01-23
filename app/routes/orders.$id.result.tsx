@@ -1,6 +1,10 @@
 import { Page, Text, Card, Button, Banner } from "@shopify/polaris";
 import { useNavigate, useParams, useSearchParams } from "@remix-run/react";
 
+const BACKEND_URL = typeof window !== 'undefined'
+  ? (import.meta.env?.VITE_BACKEND_URL || "${BACKEND_URL}")
+  : (process.env.VITE_BACKEND_URL || "${BACKEND_URL}");
+
 /**
  * CONTRATO DE DATOS - Resultado de Generación de Guía
  * 
@@ -60,7 +64,7 @@ export default function OrderResult() {
         numero: numeroGuia,
         fechaGeneracion: fechaGeneracion || new Date().toISOString(),
         trackingUrl: "https://sucursal.correos.go.cr/web/rastreo",
-        pdfUrl: `http://localhost:8000/descargar_guia/${numeroGuia}`,
+        pdfUrl: `${BACKEND_URL}/descargar_guia/${numeroGuia}`,
       },
       orderDetails: {
         orderNumber: orderNumber || orderId,
@@ -75,7 +79,7 @@ export default function OrderResult() {
         numero: "CR123456789CR",
         fechaGeneracion: new Date().toISOString(),
         trackingUrl: "https://sucursal.correos.go.cr/web/rastreo",
-        pdfUrl: "http://localhost:8000/descargar_guia/CR123456789CR",
+        pdfUrl: "${BACKEND_URL}/descargar_guia/CR123456789CR",
       },
       orderDetails: {
         orderNumber: "SH-1024",
