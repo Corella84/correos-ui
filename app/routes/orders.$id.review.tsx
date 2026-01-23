@@ -408,10 +408,6 @@ export default function OrderReview() {
     );
   }
 
-  if (typeof window === "undefined") {
-    return null;
-  }
-
   return (
     <Page
       title="Revisión de Dirección"
