@@ -31,17 +31,9 @@ export interface SingleOrderResponse {
     order: ShopifyOrder;
 }
 
-// En Remix, import.meta.env solo funciona en el cliente
-// En el servidor, usamos process.env o fallback a localhost
-// IMPORTANTE: Configurar VITE_BACKEND_URL en Vercel para el cliente
-const BACKEND_URL = typeof window !== 'undefined'
-    ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
-    : (process.env.BACKEND_URL || process.env.VITE_BACKEND_URL || "http://localhost:8000");
-
-// Log para debug en desarrollo
-if (typeof window !== 'undefined') {
-    console.log("🔧 [orders.api] BACKEND_URL:", BACKEND_URL);
-}
+// Backend URL - desarrollo local
+// Cuando se embeba en Shopify, cambiar a la URL de producción
+const BACKEND_URL = "http://localhost:8000";
 
 // FIX HIGH #3: Helper timeout
 function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs: number = 30000): Promise<Response> {

@@ -45,10 +45,8 @@ export default function OrderResult() {
   const [searchParams] = useSearchParams();
   const orderId = params.id || "";
 
-  // Usar VITE_BACKEND_URL con fallback a localhost
-  const BACKEND_URL = typeof window !== 'undefined'
-    ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
-    : (process.env.VITE_BACKEND_URL || "http://localhost:8000");
+  // Backend URL - desarrollo local
+  const BACKEND_URL = "http://localhost:8000";
 
   // Leer datos de la URL (vienen de la pantalla de confirmación)
   const numeroGuia = searchParams.get("numero");

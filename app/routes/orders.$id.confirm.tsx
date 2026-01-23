@@ -137,10 +137,8 @@ export default function OrderConfirm() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 30000);
 
-      // Usar VITE_BACKEND_URL con fallback a localhost
-      const BACKEND_URL = typeof window !== 'undefined'
-        ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
-        : (process.env.VITE_BACKEND_URL || "http://localhost:8000");
+      // Backend URL - desarrollo local
+      const BACKEND_URL = "http://localhost:8000";
 
       try {
         const response = await fetch(`${BACKEND_URL}/generar_guia`, {
@@ -197,10 +195,7 @@ export default function OrderConfirm() {
       }
     } catch (err) {
       if (err instanceof TypeError && err.message.includes("fetch")) {
-        const BACKEND_URL = typeof window !== 'undefined'
-          ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
-          : (process.env.VITE_BACKEND_URL || "http://localhost:8000");
-        setError(`No se pudo conectar con el backend. Verifica que esté corriendo en ${BACKEND_URL}`);
+        setError("No se pudo conectar con el backend. Verifica que esté corriendo en http://localhost:8000");
       } else {
         setError(
           err instanceof Error
