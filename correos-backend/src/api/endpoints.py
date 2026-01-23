@@ -4,13 +4,16 @@ Endpoints FastAPI para la integración con Correos de Costa Rica.
 import logging
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import JSONResponse
+from pydantic import BaseModel
+from typing import Optional
 from src.models.envio import SolicitudGuia, RespuestaGuia
 from src.services.guia_service import guia_service
 from src.services.envio_service import envio_service
+from src.services.catalogo_service import catalogo_service
 
 # Configurar logging
 logging.basicConfig(
-    level=logging.DEBUG,  # Cambiar a DEBUG para más detalles de debugging
+    level=logging.DEBUG,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
@@ -23,6 +26,43 @@ app = FastAPI(
 )
 
 
+# ============================================================================
+# EVENTO DE STARTUP - CARGAR CATÁLOGO EN MEMORIA
+# ============================================================================
+@app.on_event("startup")
+async def startup_event():
+    """
+    Carga el catálogo geográfico completo al iniciar el servidor.
+    Esto se ejecuta UNA SOLA VEZ al arrancar.
+    """
+    logger.info("=" * 60)
+    logger.info("CARGANDO CATÁLOGO DESDE JSON (NO SOAP)")
+    logger.info("=" * 60)
+    
+    try:
+        catalogo_service.cargar_catalogo()
+        logger.info("=" * 60)
+        logger.info("CATÁLOGO CARGADO EXITOSAMENTE")
+        logger.info("=" * 60)
+    except Exception as e:
+        logger.error("=" * 60)
+        logger.error(f"ERROR CRÍTICO AL CARGAR CATÁLOGO: {e}")
+        logger.error("El servidor continuará pero el catálogo no estará disponible")
+        logger.error("=" * 60)
+
+
+# ============================================================================
+# MODELOS PYDANTIC PARA EL ENDPOINT DE CATÁLOGO
+# ============================================================================
+class CatalogoRequest(BaseModel):
+    tipo: str  # "provincias", "cantones", "distritos"
+    provincia_codigo: Optional[str] = None
+    canton_codigo: Optional[str] = None
+
+
+# ============================================================================
+# ENDPOINTS
+# ============================================================================
 @app.get("/")
 async def root():
     """Endpoint de salud"""
@@ -40,6 +80,78 @@ async def health():
         "status": "healthy",
         "service": "Integración Correos de Costa Rica"
     }
+
+
+@app.post("/catalogo_geografico")
+async def catalogo_geografico(request: CatalogoRequest):
+    """
+    Endpoint para consultar el catálogo geográfico.
+    Lee SOLO del cache en memoria, NUNCA llama al SOAP.
+    
+    Parámetros:
+    - tipo: "provincias", "cantones", "distritos"
+    - provincia_codigo: requerido para cantones y distritos
+    - canton_codigo: requerido para distritos
+    
+    Returns:
+    {
+        "success": true,
+        "data": [...],
+        "fuente": "CACHE"
+    }
+    """
+    try:
+        logger.info(f"📦 Consulta catálogo: tipo={request.tipo}, prov={request.provincia_codigo}, cant={request.canton_codigo}")
+        
+        if request.tipo == "provincias":
+            data = catalogo_service.get_provincias()
+            logger.info(f"✅ Devolviendo {len(data)} provincias desde CACHE")
+            
+        elif request.tipo == "cantones":
+            if not request.provincia_codigo:
+                raise HTTPException(
+                    status_code=400,
+                    detail="provincia_codigo es requerido para tipo=cantones"
+                )
+            data = catalogo_service.get_cantones(request.provincia_codigo)
+            logger.info(f"✅ Devolviendo {len(data)} cantones (prov={request.provincia_codigo}) desde CACHE")
+            
+        elif request.tipo == "distritos":
+            if not request.provincia_codigo or not request.canton_codigo:
+                raise HTTPException(
+                    status_code=400,
+                    detail="provincia_codigo y canton_codigo son requeridos para tipo=distritos"
+                )
+            data = catalogo_service.get_distritos(
+                request.provincia_codigo,
+                request.canton_codigo
+            )
+            logger.info(f"✅ Devolviendo {len(data)} distritos (prov={request.provincia_codigo}, cant={request.canton_codigo}) desde CACHE")
+            
+        else:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Tipo inválido: {request.tipo}. Debe ser: provincias, cantones, distritos"
+            )
+        
+        return {
+            "success": True,
+            "data": data,
+            "fuente": "CACHE"
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"❌ Error en catalogo_geografico: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=500,
+            detail={
+                "success": False,
+                "error": str(e),
+                "fuente": "CACHE"
+            }
+        )
 
 
 @app.post("/generar_guia", response_model=RespuestaGuia)
