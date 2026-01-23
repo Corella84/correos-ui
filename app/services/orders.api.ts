@@ -31,7 +31,11 @@ export interface SingleOrderResponse {
     order: ShopifyOrder;
 }
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:8000";
+// En Remix, import.meta.env solo funciona en el cliente
+// En el servidor, usamos process.env o fallback a localhost
+const BACKEND_URL = typeof window !== 'undefined'
+    ? (import.meta.env?.VITE_BACKEND_URL || "http://localhost:8000")
+    : (process.env.VITE_BACKEND_URL || "http://localhost:8000");
 
 // FIX HIGH #3: Helper timeout
 function fetchWithTimeout(url: string, options: RequestInit = {}, timeoutMs: number = 30000): Promise<Response> {

@@ -6,7 +6,7 @@ import { json, type ActionFunctionArgs } from "@remix-run/node";
 // Llama al backend de Python que tiene la integración SOAP funcionando
 // ============================================
 
-const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || "http://localhost:8000";
+const PYTHON_BACKEND_URL = "http://localhost:8000";
 
 interface CatalogoRequest {
   tipo: "provincias" | "cantones" | "distritos";

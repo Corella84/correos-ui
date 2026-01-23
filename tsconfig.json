@@ -8,6 +8,7 @@
     "isolatedModules": true,
     "esModuleInterop": true,
     "jsx": "react-jsx",
+    "module": "ESNext",
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "target": "ES2022",
@@ -19,6 +20,7 @@
     "paths": {
       "~/*": ["./app/*"]
     },
+    "types": ["vite/client"],
     "noEmit": true
   }
 }

@@ -3,6 +3,7 @@ Endpoints FastAPI para la integración con Correos de Costa Rica.
 """
 import logging
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from typing import Optional
@@ -23,6 +24,23 @@ app = FastAPI(
     title="Integración Correos de Costa Rica",
     description="API para generar guías de envío",
     version="1.0.0"
+)
+
+# ============================================================================
+# CONFIGURACIÓN DE CORS PARA PRODUCCIÓN
+# ============================================================================
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",  # Desarrollo local
+        "http://localhost:5174",  # Desarrollo local alternativo
+        "https://*.vercel.app",  # Todos los deploys de Vercel
+        "https://vercel.app",  # Vercel
+        "*",  # Permitir todos los orígenes (solo para desarrollo/pruebas)
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 
@@ -241,3 +259,101 @@ async def global_exception_handler(request, exc):
             "detalle": str(exc)
         }
     )
+
+
+# ============================================================================
+# ENDPOINTS MOCK PARA ÓRDENES DE SHOPIFY (PARA DESARROLLO/PRUEBAS)
+# ============================================================================
+
+MOCK_ORDERS = [
+    {
+        "id": 1024,
+        "name": "#1024",
+        "created_at": "2026-01-20T10:30:00Z",
+        "financial_status": "paid",
+        "customer": {
+            "first_name": "Juan",
+            "last_name": "Pérez",
+            "email": "juan.perez@example.com",
+            "phone": "8888-8888"
+        },
+        "shipping_address": {
+            "address1": "Del Pali 200 metros sur",
+            "city": "Cartago",
+            "province": "Cartago",
+            "zip": "30101",
+            "phone": "8888-8888",
+            "country": "CR"
+        }
+    },
+    {
+        "id": 1025,
+        "name": "#1025",
+        "created_at": "2026-01-21T14:15:00Z",
+        "financial_status": "paid",
+        "customer": {
+            "first_name": "María",
+            "last_name": "González",
+            "email": "maria.gonzalez@example.com",
+            "phone": "7777-7777"
+        },
+        "shipping_address": {
+            "address1": "Avenida Central, casa 123",
+            "city": "San José",
+            "province": "San José",
+            "zip": "10101",
+            "phone": "7777-7777",
+            "country": "CR"
+        }
+    }
+]
+
+
+@app.get("/ordenes")
+async def get_ordenes():
+    """
+    Endpoint mock para obtener órdenes de Shopify.
+    En producción, esto debería conectarse a la API real de Shopify.
+    """
+    logger.info("📦 Obteniendo órdenes mock")
+    return {
+        "success": True,
+        "orders": MOCK_ORDERS
+    }
+
+
+@app.get("/ordenes/{order_id}")
+async def get_orden(order_id: str):
+    """
+    Endpoint mock para obtener una orden específica.
+    En producción, esto debería conectarse a la API real de Shopify.
+    """
+    logger.info(f"📦 Obteniendo orden mock: {order_id}")
+
+    # Buscar por ID numérico o nombre
+    for order in MOCK_ORDERS:
+        if str(order["id"]) == order_id or order["name"] == f"#{order_id}":
+            return {
+                "success": True,
+                "order": order
+            }
+
+    # Si no se encuentra, retornar 404
+    raise HTTPException(status_code=404, detail="Order not found")
+
+
+@app.get("/correos/status/{order_key}")
+async def get_correos_status(order_key: str):
+    """
+    Endpoint mock para obtener el estado de una orden en Correos.
+    En producción, esto debería consultar processed_orders.json o base de datos.
+    """
+    logger.info(f"📦 Consultando estado de Correos para: {order_key}")
+
+    # Por ahora, retornar que no existe
+    return {
+        "exists": False,
+        "status": None,
+        "tracking_number": None,
+        "processed_at": None
+    }
