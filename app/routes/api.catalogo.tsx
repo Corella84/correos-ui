@@ -6,7 +6,9 @@ import { json, type ActionFunctionArgs } from "@remix-run/node";
 // Llama al backend de Python que tiene la integración SOAP funcionando
 // ============================================
 
-const PYTHON_BACKEND_URL = "http://localhost:8000";
+// Usar BACKEND_URL primero (para servidor Remix), luego VITE_BACKEND_URL, luego localhost
+// En Remix servidor, BACKEND_URL es más confiable que VITE_BACKEND_URL
+const PYTHON_BACKEND_URL = process.env.BACKEND_URL || process.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 interface CatalogoRequest {
   tipo: "provincias" | "cantones" | "distritos";
@@ -19,6 +21,12 @@ export async function action({ request }: ActionFunctionArgs) {
     const body: CatalogoRequest = await request.json();
     const { tipo, provincia_codigo, canton_codigo } = body;
 
+    // Logging para debug: mostrar qué URL está usando
+    console.log("🔧 Backend URL configurada:", PYTHON_BACKEND_URL);
+    console.log("🔧 Variables disponibles:", {
+      BACKEND_URL: process.env.BACKEND_URL ? "✅" : "❌",
+      VITE_BACKEND_URL: process.env.VITE_BACKEND_URL ? "✅" : "❌"
+    });
     console.log("📥 Request /api/catalogo:", { tipo, provincia_codigo, canton_codigo });
     console.log(`🔗 Llamando a backend Python: ${PYTHON_BACKEND_URL}/catalogo_geografico`);
 
@@ -37,8 +45,13 @@ export async function action({ request }: ActionFunctionArgs) {
 
     if (!response.ok) {
       const errorText = await response.text();
-      console.error(`❌ Error del backend Python: ${response.status} - ${errorText}`);
-      throw new Error(`Backend error: ${response.status}`);
+      console.error(`❌ Error del backend Python:`, {
+        status: response.status,
+        statusText: response.statusText,
+        url: `${PYTHON_BACKEND_URL}/catalogo_geografico`,
+        error: errorText
+      });
+      throw new Error(`Backend error: ${response.status} - ${response.statusText}`);
     }
 
     const data = await response.json();

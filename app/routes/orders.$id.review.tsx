@@ -255,9 +255,11 @@ export default function OrderReview() {
     return () => { cancelled = true; };
   }, [formData.provincia, formData.canton]);
 
-  // Opciones para selects - API primero, fallback local
+  // Opciones para selects - API primero, fallback local si API vacío
   const provinciasOptions = useMemo(() => {
+    // Usar API si tiene datos, sino fallback local
     const source = provinciasAPI.length > 0 ? provinciasAPI : costaRica;
+    console.log(`[SELECT] Provincias: usando ${provinciasAPI.length > 0 ? 'API' : 'LOCAL'} (${source.length} items)`);
     return source.map((p) => ({
       label: p.nombre,
       value: String(p.codigo),
@@ -267,7 +269,12 @@ export default function OrderReview() {
   const cantonesOptions = useMemo(() => {
     if (!formData.provincia) return [];
 
-    const source = cantonesAPI.length > 0 ? cantonesAPI : getCantonesByProvincia(formData.provincia);
+    // Fallback local para la provincia actual
+    const localCantones = getCantonesByProvincia(formData.provincia);
+
+    // Usar API si tiene datos, sino fallback local
+    const source = cantonesAPI.length > 0 ? cantonesAPI : localCantones;
+    console.log(`[SELECT] Cantones (prov=${formData.provincia}): usando ${cantonesAPI.length > 0 ? 'API' : 'LOCAL'} (${source.length} items)`);
 
     return [
       { label: "Seleccione un cantón...", value: "" },
@@ -281,7 +288,12 @@ export default function OrderReview() {
   const distritosOptions = useMemo(() => {
     if (!formData.provincia || !formData.canton) return [];
 
-    const source = distritosAPI.length > 0 ? distritosAPI : getDistritosByCanton(formData.provincia, formData.canton);
+    // Fallback local para el cantón actual
+    const localDistritos = getDistritosByCanton(formData.provincia, formData.canton);
+
+    // Usar API si tiene datos, sino fallback local
+    const source = distritosAPI.length > 0 ? distritosAPI : localDistritos;
+    console.log(`[SELECT] Distritos (prov=${formData.provincia}, cant=${formData.canton}): usando ${distritosAPI.length > 0 ? 'API' : 'LOCAL'} (${source.length} items)`);
 
     return [
       { label: "Seleccione un distrito...", value: "" },

@@ -2,382 +2,382 @@
   "provincias": [
     {
       "codigo": "1",
-      "nombre": "San José"
+      "nombre": "SAN JOSÉ"
     },
     {
       "codigo": "2",
-      "nombre": "Alajuela"
+      "nombre": "ALAJUELA"
     },
     {
       "codigo": "3",
-      "nombre": "Cartago"
+      "nombre": "CARTAGO"
     },
     {
       "codigo": "4",
-      "nombre": "Heredia"
+      "nombre": "HEREDIA"
     },
     {
       "codigo": "5",
-      "nombre": "Guanacaste"
+      "nombre": "GUANACASTE"
     },
     {
       "codigo": "6",
-      "nombre": "Puntarenas"
+      "nombre": "PUNTARENAS"
     },
     {
       "codigo": "7",
-      "nombre": "Limón"
+      "nombre": "LIMÓN"
     }
   ],
   "cantones": {
     "1": [
       {
         "codigo": "01",
-        "nombre": "San José"
+        "nombre": "SAN JOSÉ"
       },
       {
         "codigo": "02",
-        "nombre": "Escazú"
+        "nombre": "ESCAZÚ"
       },
       {
         "codigo": "03",
-        "nombre": "Desamparados"
+        "nombre": "DESAMPARADOS"
       },
       {
         "codigo": "04",
-        "nombre": "Puriscal"
+        "nombre": "PURISCAL"
       },
       {
         "codigo": "05",
-        "nombre": "Tarrazu"
+        "nombre": "TARRAZU"
       },
       {
         "codigo": "06",
-        "nombre": "Aserrí"
+        "nombre": "ASERRÍ"
       },
       {
         "codigo": "07",
-        "nombre": "Mora"
+        "nombre": "MORA"
       },
       {
         "codigo": "08",
-        "nombre": "Goicoechea"
+        "nombre": "GOICOECHEA"
       },
       {
         "codigo": "09",
-        "nombre": "Santa Ana"
+        "nombre": "SANTA ANA"
       },
       {
         "codigo": "10",
-        "nombre": "Alajuelita"
+        "nombre": "ALAJUELITA"
       },
       {
         "codigo": "11",
-        "nombre": "Vazquez de Coronado"
+        "nombre": "VAZQUEZ DE CORONADO"
       },
       {
         "codigo": "12",
-        "nombre": "Acosta"
+        "nombre": "ACOSTA"
       },
       {
         "codigo": "13",
-        "nombre": "Tibás"
+        "nombre": "TIBÁS"
       },
       {
         "codigo": "14",
-        "nombre": "Moravia"
+        "nombre": "MORAVIA"
       },
       {
         "codigo": "15",
-        "nombre": "Montes de Oca"
+        "nombre": "MONTES DE OCA"
       },
       {
         "codigo": "16",
-        "nombre": "Turrubares"
+        "nombre": "TURRUBARES"
       },
       {
         "codigo": "17",
-        "nombre": "Dota"
+        "nombre": "DOTA"
       },
       {
         "codigo": "18",
-        "nombre": "Curridabat"
+        "nombre": "CURRIDABAT"
       },
       {
         "codigo": "19",
-        "nombre": "Pérez Zeledón"
+        "nombre": "PÉREZ ZELEDÓN"
       },
       {
         "codigo": "20",
-        "nombre": "León Cortes"
+        "nombre": "LEÓN CORTES"
       }
     ],
     "2": [
       {
         "codigo": "01",
-        "nombre": "Alajuela"
+        "nombre": "ALAJUELA"
       },
       {
         "codigo": "02",
-        "nombre": "San Ramon"
+        "nombre": "SAN RAMON"
       },
       {
         "codigo": "03",
-        "nombre": "Grecia"
+        "nombre": "GRECIA"
       },
       {
         "codigo": "04",
-        "nombre": "San Mateo"
+        "nombre": "SAN MATEO"
       },
       {
         "codigo": "05",
-        "nombre": "Atenas"
+        "nombre": "ATENAS"
       },
       {
         "codigo": "06",
-        "nombre": "Naranjo"
+        "nombre": "NARANJO"
       },
       {
         "codigo": "07",
-        "nombre": "Palmares"
+        "nombre": "PALMARES"
       },
       {
         "codigo": "08",
-        "nombre": "Poás"
+        "nombre": "POÁS"
       },
       {
         "codigo": "09",
-        "nombre": "Orotina"
+        "nombre": "OROTINA"
       },
       {
         "codigo": "10",
-        "nombre": "San Carlos"
+        "nombre": "SAN CARLOS"
       },
       {
         "codigo": "11",
-        "nombre": "Alfaro Ruiz"
+        "nombre": "ALFARO RUIZ"
       },
       {
         "codigo": "12",
-        "nombre": "Valverde Vega"
+        "nombre": "VALVERDE VEGA"
       },
       {
         "codigo": "13",
-        "nombre": "Upala"
+        "nombre": "UPALA"
       },
       {
         "codigo": "14",
-        "nombre": "Los Chiles"
+        "nombre": "LOS CHILES"
       },
       {
         "codigo": "15",
-        "nombre": "Guatuso"
+        "nombre": "GUATUSO"
       },
       {
         "codigo": "16",
-        "nombre": "Rio Cuarto"
+        "nombre": "RIO CUARTO"
       }
     ],
     "3": [
       {
         "codigo": "01",
-        "nombre": "Cartago"
+        "nombre": "CARTAGO"
       },
       {
         "codigo": "02",
-        "nombre": "Paraíso"
+        "nombre": "PARAÍSO"
       },
       {
         "codigo": "03",
-        "nombre": "La Unión"
+        "nombre": "LA UNIÓN"
       },
       {
         "codigo": "04",
-        "nombre": "Jiménez"
+        "nombre": "JIMÉNEZ"
       },
       {
         "codigo": "05",
-        "nombre": "Turrialba"
+        "nombre": "TURRIALBA"
       },
       {
         "codigo": "06",
-        "nombre": "Alvarado"
+        "nombre": "ALVARADO"
       },
       {
         "codigo": "07",
-        "nombre": "Oreamuno"
+        "nombre": "OREAMUNO"
       },
       {
         "codigo": "08",
-        "nombre": "El Guarco"
+        "nombre": "EL GUARCO"
       }
     ],
     "4": [
       {
         "codigo": "01",
-        "nombre": "Heredia"
+        "nombre": "HEREDIA"
       },
       {
         "codigo": "02",
-        "nombre": "Barva"
+        "nombre": "BARVA"
       },
       {
         "codigo": "03",
-        "nombre": "Santo Domingo"
+        "nombre": "SANTO DOMINGO"
       },
       {
         "codigo": "04",
-        "nombre": "Santa Bárbara"
+        "nombre": "SANTA BÁRBARA"
       },
       {
         "codigo": "05",
-        "nombre": "San Rafael"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "06",
-        "nombre": "San Isidro"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "07",
-        "nombre": "Belén"
+        "nombre": "BELÉN"
       },
       {
         "codigo": "08",
-        "nombre": "San Joaquín de Flores"
+        "nombre": "SAN JOAQUÍN DE FLORES"
       },
       {
         "codigo": "09",
-        "nombre": "San Pablo"
+        "nombre": "SAN PABLO"
       },
       {
         "codigo": "10",
-        "nombre": "Sarapiquí"
+        "nombre": "SARAPIQUÍ"
       }
     ],
     "5": [
       {
         "codigo": "01",
-        "nombre": "Liberia"
+        "nombre": "LIBERIA"
       },
       {
         "codigo": "02",
-        "nombre": "Nicoya"
+        "nombre": "NICOYA"
       },
       {
         "codigo": "03",
-        "nombre": "Santa Cruz"
+        "nombre": "SANTA CRUZ"
       },
       {
         "codigo": "04",
-        "nombre": "Bagaces"
+        "nombre": "BAGACES"
       },
       {
         "codigo": "05",
-        "nombre": "Carrillo"
+        "nombre": "CARRILLO"
       },
       {
         "codigo": "06",
-        "nombre": "Cañas"
+        "nombre": "CAÑAS"
       },
       {
         "codigo": "07",
-        "nombre": "Abangares"
+        "nombre": "ABANGARES"
       },
       {
         "codigo": "08",
-        "nombre": "Tilarán"
+        "nombre": "TILARÁN"
       },
       {
         "codigo": "09",
-        "nombre": "Nandayure"
+        "nombre": "NANDAYURE"
       },
       {
         "codigo": "10",
-        "nombre": "La Cruz"
+        "nombre": "LA CRUZ"
       },
       {
         "codigo": "11",
-        "nombre": "Hojancha"
+        "nombre": "HOJANCHA"
       }
     ],
     "6": [
       {
         "codigo": "01",
-        "nombre": "Puntarenas"
+        "nombre": "PUNTARENAS"
       },
       {
         "codigo": "02",
-        "nombre": "Esparza"
+        "nombre": "ESPARZA"
       },
       {
         "codigo": "03",
-        "nombre": "Buenos Aires"
+        "nombre": "BUENOS AIRES"
       },
       {
         "codigo": "04",
-        "nombre": "Montes de Oro"
+        "nombre": "MONTES DE ORO"
       },
       {
         "codigo": "05",
-        "nombre": "Osa"
+        "nombre": "OSA"
       },
       {
         "codigo": "06",
-        "nombre": "Aguirre"
+        "nombre": "AGUIRRE"
       },
       {
         "codigo": "07",
-        "nombre": "Golfito"
+        "nombre": "GOLFITO"
       },
       {
         "codigo": "08",
-        "nombre": "Coto Brus"
+        "nombre": "COTO BRUS"
       },
       {
         "codigo": "09",
-        "nombre": "Parrita"
+        "nombre": "PARRITA"
       },
       {
         "codigo": "10",
-        "nombre": "Corredores"
+        "nombre": "CORREDORES"
       },
       {
         "codigo": "11",
-        "nombre": "Garabito"
+        "nombre": "GARABITO"
       },
       {
         "codigo": "12",
-        "nombre": "Monteverde"
+        "nombre": "MONTEVERDE"
       },
       {
         "codigo": "13",
-        "nombre": "Puerto Jimenez"
+        "nombre": "PUERTO JIMENEZ"
       }
     ],
     "7": [
       {
         "codigo": "01",
-        "nombre": "Limón"
+        "nombre": "LIMÓN"
       },
       {
         "codigo": "02",
-        "nombre": "Pococí"
+        "nombre": "POCOCÍ"
       },
       {
         "codigo": "03",
-        "nombre": "Siquirres"
+        "nombre": "SIQUIRRES"
       },
       {
         "codigo": "04",
-        "nombre": "Talamanca"
+        "nombre": "TALAMANCA"
       },
       {
         "codigo": "05",
-        "nombre": "Matina"
+        "nombre": "MATINA"
       },
       {
         "codigo": "06",
-        "nombre": "Guácimo"
+        "nombre": "GUÁCIMO"
       }
     ]
   },
@@ -385,2644 +385,2149 @@
     "1-01": [
       {
         "codigo": "07",
-        "nombre": "Uruca",
-        "codigoPostal": "10107"
+        "nombre": "URUCA"
       },
       {
         "codigo": "09",
-        "nombre": "Pavas",
-        "codigoPostal": "10109"
+        "nombre": "PAVAS"
       },
       {
         "codigo": "04",
-        "nombre": "Catedral",
-        "codigoPostal": "10104"
+        "nombre": "CATEDRAL"
       },
       {
         "codigo": "10",
-        "nombre": "Hatillo",
-        "codigoPostal": "10110"
+        "nombre": "HATILLO"
       },
       {
         "codigo": "06",
-        "nombre": "San Francisco de Dos Ríos",
-        "codigoPostal": "10106"
+        "nombre": "SAN FRANCISCO DE DOS RÍOS"
       },
       {
         "codigo": "02",
-        "nombre": "Merced",
-        "codigoPostal": "10102"
+        "nombre": "MERCED"
       },
       {
         "codigo": "11",
-        "nombre": "San Sebastián",
-        "codigoPostal": "10111"
+        "nombre": "SAN SEBASTIÁN"
       },
       {
         "codigo": "01",
-        "nombre": "Carmen",
-        "codigoPostal": "10101"
+        "nombre": "CARMEN"
       },
       {
         "codigo": "03",
-        "nombre": "Hospital",
-        "codigoPostal": "10103"
+        "nombre": "HOSPITAL"
       },
       {
         "codigo": "05",
-        "nombre": "Zapote",
-        "codigoPostal": "10105"
+        "nombre": "ZAPOTE"
       },
       {
         "codigo": "08",
-        "nombre": "Mata Redonda",
-        "codigoPostal": "10108"
+        "nombre": "MATA REDONDA"
       }
     ],
     "1-02": [
       {
         "codigo": "02",
-        "nombre": "San Antonio",
-        "codigoPostal": "10202"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "03",
-        "nombre": "San Rafael",
-        "codigoPostal": "10203"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "01",
-        "nombre": "Escazú",
-        "codigoPostal": "10201"
+        "nombre": "ESCAZÚ"
       }
     ],
     "1-03": [
       {
         "codigo": "09",
-        "nombre": "Rosario",
-        "codigoPostal": "10309"
+        "nombre": "ROSARIO"
       },
       {
         "codigo": "13",
-        "nombre": "Los Guido",
-        "codigoPostal": "10313"
+        "nombre": "LOS GUIDO"
       },
       {
         "codigo": "05",
-        "nombre": "San Antonio",
-        "codigoPostal": "10305"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "02",
-        "nombre": "San Miguel",
-        "codigoPostal": "10302"
+        "nombre": "SAN MIGUEL"
       },
       {
         "codigo": "06",
-        "nombre": "Frailes",
-        "codigoPostal": "10306"
+        "nombre": "FRAILES"
       },
       {
         "codigo": "03",
-        "nombre": "San Juan de Dios",
-        "codigoPostal": "10303"
+        "nombre": "SAN JUAN DE DIOS"
       },
       {
         "codigo": "10",
-        "nombre": "Damas",
-        "codigoPostal": "10310"
+        "nombre": "DAMAS"
       },
       {
         "codigo": "04",
-        "nombre": "San Rafael Arriba",
-        "codigoPostal": "10304"
+        "nombre": "SAN RAFAEL ARRIBA"
       },
       {
         "codigo": "12",
-        "nombre": "Gravilias",
-        "codigoPostal": "10312"
+        "nombre": "GRAVILIAS"
       },
       {
         "codigo": "11",
-        "nombre": "San Rafael Abajo",
-        "codigoPostal": "10311"
+        "nombre": "SAN RAFAEL ABAJO"
       },
       {
         "codigo": "01",
-        "nombre": "Desamparados",
-        "codigoPostal": "10301"
+        "nombre": "DESAMPARADOS"
       },
       {
         "codigo": "07",
-        "nombre": "Patarra",
-        "codigoPostal": "10307"
+        "nombre": "PATARRA"
       },
       {
         "codigo": "08",
-        "nombre": "San Cristobal",
-        "codigoPostal": "10308"
+        "nombre": "SAN CRISTOBAL"
       }
     ],
     "1-04": [
       {
         "codigo": "05",
-        "nombre": "San Rafael",
-        "codigoPostal": "10405"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "04",
-        "nombre": "Grifo Alto",
-        "codigoPostal": "10404"
+        "nombre": "GRIFO ALTO"
       },
       {
         "codigo": "09",
-        "nombre": "Chires",
-        "codigoPostal": "10409"
+        "nombre": "CHIRES"
       },
       {
         "codigo": "01",
-        "nombre": "Santiago",
-        "codigoPostal": "10401"
+        "nombre": "SANTIAGO"
       },
       {
         "codigo": "03",
-        "nombre": "Barbacoas",
-        "codigoPostal": "10403"
+        "nombre": "BARBACOAS"
       },
       {
         "codigo": "07",
-        "nombre": "Desamparaditos",
-        "codigoPostal": "10407"
+        "nombre": "DESAMPARADITOS"
       },
       {
         "codigo": "06",
-        "nombre": "Candelaria",
-        "codigoPostal": "10406"
+        "nombre": "CANDELARIA"
       },
       {
         "codigo": "02",
-        "nombre": "Mercedes Sur",
-        "codigoPostal": "10402"
+        "nombre": "MERCEDES SUR"
       },
       {
         "codigo": "08",
-        "nombre": "San Antonio",
-        "codigoPostal": "10408"
+        "nombre": "SAN ANTONIO"
       }
     ],
     "1-05": [
       {
         "codigo": "01",
-        "nombre": "San Marcos",
-        "codigoPostal": "10501"
+        "nombre": "SAN MARCOS"
       },
       {
         "codigo": "02",
-        "nombre": "San Lorenzo",
-        "codigoPostal": "10502"
+        "nombre": "SAN LORENZO"
       },
       {
         "codigo": "03",
-        "nombre": "San Carlos",
-        "codigoPostal": "10503"
+        "nombre": "SAN CARLOS"
       }
     ],
     "1-06": [
       {
         "codigo": "04",
-        "nombre": "San Gabriel",
-        "codigoPostal": "10604"
+        "nombre": "SAN GABRIEL"
       },
       {
         "codigo": "07",
-        "nombre": "Salitrillos",
-        "codigoPostal": "10607"
+        "nombre": "SALITRILLOS"
       },
       {
         "codigo": "05",
-        "nombre": "Legua",
-        "codigoPostal": "10605"
+        "nombre": "LEGUA"
       },
       {
         "codigo": "01",
-        "nombre": "Aserrí",
-        "codigoPostal": "10601"
+        "nombre": "ASERRÍ"
       },
       {
         "codigo": "06",
-        "nombre": "Monterrey",
-        "codigoPostal": "10606"
+        "nombre": "MONTERREY"
       },
       {
         "codigo": "02",
-        "nombre": "Tarbaca",
-        "codigoPostal": "10602"
+        "nombre": "TARBACA"
       },
       {
         "codigo": "03",
-        "nombre": "Vuelta de Jorco",
-        "codigoPostal": "10603"
+        "nombre": "VUELTA DE JORCO"
       }
     ],
     "1-07": [
       {
         "codigo": "04",
-        "nombre": "Piedras Negras",
-        "codigoPostal": "10704"
+        "nombre": "PIEDRAS NEGRAS"
       },
       {
         "codigo": "03",
-        "nombre": "Tabarcia",
-        "codigoPostal": "10703"
+        "nombre": "TABARCIA"
       },
       {
         "codigo": "05",
-        "nombre": "Picagres",
-        "codigoPostal": "10705"
+        "nombre": "PICAGRES"
       },
       {
         "codigo": "01",
-        "nombre": "Colón",
-        "codigoPostal": "10701"
+        "nombre": "COLÓN"
       },
       {
         "codigo": "06",
-        "nombre": "Jaris",
-        "codigoPostal": "10706"
+        "nombre": "JARIS"
       },
       {
         "codigo": "07",
-        "nombre": "Quitirrizi",
-        "codigoPostal": "10707"
+        "nombre": "QUITIRRIZI"
       },
       {
         "codigo": "02",
-        "nombre": "Guayabo",
-        "codigoPostal": "10702"
+        "nombre": "GUAYABO"
       }
     ],
     "1-08": [
       {
         "codigo": "02",
-        "nombre": "San Francisco",
-        "codigoPostal": "10802"
+        "nombre": "SAN FRANCISCO"
       },
       {
         "codigo": "01",
-        "nombre": "Guadalupe",
-        "codigoPostal": "10801"
+        "nombre": "GUADALUPE"
       },
       {
         "codigo": "05",
-        "nombre": "Ipís",
-        "codigoPostal": "10805"
+        "nombre": "IPÍS"
       },
       {
         "codigo": "04",
-        "nombre": "Mata de Plátano",
-        "codigoPostal": "10804"
+        "nombre": "MATA DE PLÁTANO"
       },
       {
         "codigo": "06",
-        "nombre": "Rancho Redondo",
-        "codigoPostal": "10806"
+        "nombre": "RANCHO REDONDO"
       },
       {
         "codigo": "03",
-        "nombre": "Calle Blancos",
-        "codigoPostal": "10803"
+        "nombre": "CALLE BLANCOS"
       },
       {
         "codigo": "07",
-        "nombre": "Purral",
-        "codigoPostal": "10807"
+        "nombre": "PURRAL"
       }
     ],
     "1-09": [
       {
         "codigo": "01",
-        "nombre": "Santa Ana",
-        "codigoPostal": "10901"
+        "nombre": "SANTA ANA"
       },
       {
         "codigo": "05",
-        "nombre": "Piedades",
-        "codigoPostal": "10905"
+        "nombre": "PIEDADES"
       },
       {
         "codigo": "06",
-        "nombre": "Brasil",
-        "codigoPostal": "10906"
+        "nombre": "BRASIL"
       },
       {
         "codigo": "03",
-        "nombre": "Pozos",
-        "codigoPostal": "10903"
+        "nombre": "POZOS"
       },
       {
         "codigo": "02",
-        "nombre": "Salitral",
-        "codigoPostal": "10902"
+        "nombre": "SALITRAL"
       },
       {
         "codigo": "04",
-        "nombre": "Uruca",
-        "codigoPostal": "10904"
+        "nombre": "URUCA"
       }
     ],
     "1-10": [
       {
         "codigo": "01",
-        "nombre": "Alajuelita",
-        "codigoPostal": "11001"
+        "nombre": "ALAJUELITA"
       },
       {
         "codigo": "02",
-        "nombre": "San Josecito",
-        "codigoPostal": "11002"
+        "nombre": "SAN JOSECITO"
       },
       {
         "codigo": "04",
-        "nombre": "Concepción",
-        "codigoPostal": "11004"
+        "nombre": "CONCEPCIÓN"
       },
       {
         "codigo": "05",
-        "nombre": "San Felipe",
-        "codigoPostal": "11005"
+        "nombre": "SAN FELIPE"
       },
       {
         "codigo": "03",
-        "nombre": "San Antonio",
-        "codigoPostal": "11003"
+        "nombre": "SAN ANTONIO"
       }
     ],
     "1-11": [
       {
         "codigo": "02",
-        "nombre": "San Rafael",
-        "codigoPostal": "11102"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "01",
-        "nombre": "San Isidro",
-        "codigoPostal": "11101"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "05",
-        "nombre": "Cascajal",
-        "codigoPostal": "11105"
+        "nombre": "CASCAJAL"
       },
       {
         "codigo": "03",
-        "nombre": "Dulce Nombre de Jesús",
-        "codigoPostal": "11103"
+        "nombre": "DULCE NOMBRE DE JESÚS"
       },
       {
         "codigo": "04",
-        "nombre": "Patalillo",
-        "codigoPostal": "11104"
+        "nombre": "PATALILLO"
       }
     ],
     "1-12": [
       {
         "codigo": "01",
-        "nombre": "San Ignacio de Acosta",
-        "codigoPostal": "11201"
+        "nombre": "SAN IGNACIO DE ACOSTA"
       },
       {
         "codigo": "04",
-        "nombre": "Cangrejal",
-        "codigoPostal": "11204"
+        "nombre": "CANGREJAL"
       },
       {
         "codigo": "03",
-        "nombre": "Palmichal",
-        "codigoPostal": "11203"
+        "nombre": "PALMICHAL"
       },
       {
         "codigo": "02",
-        "nombre": "Guaitil",
-        "codigoPostal": "11202"
+        "nombre": "GUAITIL"
       },
       {
         "codigo": "05",
-        "nombre": "Sabanillas",
-        "codigoPostal": "11205"
+        "nombre": "SABANILLAS"
       }
     ],
     "1-13": [
       {
         "codigo": "01",
-        "nombre": "San Juan",
-        "codigoPostal": "11301"
+        "nombre": "SAN JUAN"
       },
       {
         "codigo": "02",
-        "nombre": "Cinco esquinas",
-        "codigoPostal": "11302"
+        "nombre": "CINCO ESQUINAS"
       },
       {
         "codigo": "04",
-        "nombre": "Leon XIII",
-        "codigoPostal": "11304"
+        "nombre": "LEON XIII"
       },
       {
         "codigo": "05",
-        "nombre": "Colima",
-        "codigoPostal": "11305"
+        "nombre": "COLIMA"
       },
       {
         "codigo": "03",
-        "nombre": "Anselmo Llorente",
-        "codigoPostal": "11303"
+        "nombre": "ANSELMO LLORENTE"
       }
     ],
     "1-14": [
       {
         "codigo": "01",
-        "nombre": "San Vicente",
-        "codigoPostal": "11401"
+        "nombre": "SAN VICENTE"
       },
       {
         "codigo": "03",
-        "nombre": "Trinidad",
-        "codigoPostal": "11403"
+        "nombre": "TRINIDAD"
       },
       {
         "codigo": "02",
-        "nombre": "San Jerónimo",
-        "codigoPostal": "11402"
+        "nombre": "SAN JERÓNIMO"
       }
     ],
     "1-15": [
       {
         "codigo": "03",
-        "nombre": "Mercedes",
-        "codigoPostal": "11503"
+        "nombre": "MERCEDES"
       },
       {
         "codigo": "01",
-        "nombre": "San Pedro",
-        "codigoPostal": "11501"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "04",
-        "nombre": "San Rafael",
-        "codigoPostal": "11504"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "02",
-        "nombre": "Sabanilla",
-        "codigoPostal": "11502"
+        "nombre": "SABANILLA"
       }
     ],
     "1-16": [
       {
         "codigo": "04",
-        "nombre": "San Luis",
-        "codigoPostal": "11604"
+        "nombre": "SAN LUIS"
       },
       {
         "codigo": "02",
-        "nombre": "San Pedro",
-        "codigoPostal": "11602"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "05",
-        "nombre": "Carara",
-        "codigoPostal": "11605"
+        "nombre": "CARARA"
       },
       {
         "codigo": "03",
-        "nombre": "San Juan de Mata",
-        "codigoPostal": "11603"
+        "nombre": "SAN JUAN DE MATA"
       },
       {
         "codigo": "01",
-        "nombre": "San Pablo",
-        "codigoPostal": "11601"
+        "nombre": "SAN PABLO"
       }
     ],
     "1-17": [
       {
         "codigo": "01",
-        "nombre": "Santa María",
-        "codigoPostal": "11701"
+        "nombre": "SANTA MARÍA"
       },
       {
         "codigo": "03",
-        "nombre": "Copey",
-        "codigoPostal": "11703"
+        "nombre": "COPEY"
       },
       {
         "codigo": "02",
-        "nombre": "Jardín",
-        "codigoPostal": "11702"
+        "nombre": "JARDÍN"
       }
     ],
     "1-18": [
       {
         "codigo": "01",
-        "nombre": "Curridabat",
-        "codigoPostal": "11801"
+        "nombre": "CURRIDABAT"
       },
       {
         "codigo": "02",
-        "nombre": "Granadilla",
-        "codigoPostal": "11802"
+        "nombre": "GRANADILLA"
       },
       {
         "codigo": "04",
-        "nombre": "Tirrases",
-        "codigoPostal": "11804"
+        "nombre": "TIRRASES"
       },
       {
         "codigo": "03",
-        "nombre": "Sánchez",
-        "codigoPostal": "11803"
+        "nombre": "SÁNCHEZ"
       }
     ],
     "1-19": [
       {
         "codigo": "11",
-        "nombre": "Páramo",
-        "codigoPostal": "11911"
+        "nombre": "PÁRAMO"
       },
       {
         "codigo": "08",
-        "nombre": "Cajón",
-        "codigoPostal": "11908"
+        "nombre": "CAJÓN"
       },
       {
         "codigo": "10",
-        "nombre": "Río Nuevo",
-        "codigoPostal": "11910"
+        "nombre": "RÍO NUEVO"
       },
       {
         "codigo": "04",
-        "nombre": "Rivas",
-        "codigoPostal": "11904"
+        "nombre": "RIVAS"
       },
       {
         "codigo": "05",
-        "nombre": "San Pedro",
-        "codigoPostal": "11905"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "01",
-        "nombre": "San Isidro del General",
-        "codigoPostal": "11901"
+        "nombre": "SAN ISIDRO DEL GENERAL"
       },
       {
         "codigo": "07",
-        "nombre": "Pejibaye",
-        "codigoPostal": "11907"
+        "nombre": "PEJIBAYE"
       },
       {
         "codigo": "02",
-        "nombre": "General",
-        "codigoPostal": "11902"
+        "nombre": "GENERAL"
       },
       {
         "codigo": "09",
-        "nombre": "Barú",
-        "codigoPostal": "11909"
+        "nombre": "BARÚ"
       },
       {
         "codigo": "06",
-        "nombre": "Platanares",
-        "codigoPostal": "11906"
+        "nombre": "PLATANARES"
       },
       {
         "codigo": "03",
-        "nombre": "Daniel Flores",
-        "codigoPostal": "11903"
+        "nombre": "DANIEL FLORES"
       },
       {
         "codigo": "12",
-        "nombre": "LA AMISTAD",
-        "codigoPostal": "11912"
+        "nombre": "LA AMISTAD"
       }
     ],
     "1-20": [
       {
         "codigo": "04",
-        "nombre": "San Isidro",
-        "codigoPostal": "12004"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "03",
-        "nombre": "Llano Bonito",
-        "codigoPostal": "12003"
+        "nombre": "LLANO BONITO"
       },
       {
         "codigo": "05",
-        "nombre": "Santa Cruz",
-        "codigoPostal": "12005"
+        "nombre": "SANTA CRUZ"
       },
       {
         "codigo": "01",
-        "nombre": "San Pablo",
-        "codigoPostal": "12001"
+        "nombre": "SAN PABLO"
       },
       {
         "codigo": "06",
-        "nombre": "San Antonio",
-        "codigoPostal": "12006"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "02",
-        "nombre": "San Andrés",
-        "codigoPostal": "12002"
+        "nombre": "SAN ANDRÉS"
       }
     ],
     "2-01": [
       {
         "codigo": "01",
-        "nombre": "Alajuela",
-        "codigoPostal": "20101"
+        "nombre": "ALAJUELA"
       },
       {
         "codigo": "14",
-        "nombre": "Sarapiquí",
-        "codigoPostal": "20114"
+        "nombre": "SARAPIQUÍ"
       },
       {
         "codigo": "07",
-        "nombre": "Sabanilla",
-        "codigoPostal": "20107"
+        "nombre": "SABANILLA"
       },
       {
         "codigo": "02",
-        "nombre": "San José",
-        "codigoPostal": "20102"
+        "nombre": "SAN JOSÉ"
       },
       {
         "codigo": "05",
-        "nombre": "Guácima",
-        "codigoPostal": "20105"
+        "nombre": "GUÁCIMA"
       },
       {
         "codigo": "08",
-        "nombre": "San Rafael",
-        "codigoPostal": "20108"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "12",
-        "nombre": "Tambor",
-        "codigoPostal": "20112"
+        "nombre": "TAMBOR"
       },
       {
         "codigo": "11",
-        "nombre": "Turrúcares",
-        "codigoPostal": "20111"
+        "nombre": "TURRÚCARES"
       },
       {
         "codigo": "09",
-        "nombre": "Río Segundo",
-        "codigoPostal": "20109"
+        "nombre": "RÍO SEGUNDO"
       },
       {
         "codigo": "06",
-        "nombre": "San Isidro",
-        "codigoPostal": "20106"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "13",
-        "nombre": "Garita",
-        "codigoPostal": "20113"
+        "nombre": "GARITA"
       },
       {
         "codigo": "03",
-        "nombre": "Carrizal",
-        "codigoPostal": "20103"
+        "nombre": "CARRIZAL"
       },
       {
         "codigo": "04",
-        "nombre": "San Antonio",
-        "codigoPostal": "20104"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "10",
-        "nombre": "Desamparados",
-        "codigoPostal": "20110"
+        "nombre": "DESAMPARADOS"
       }
     ],
     "2-02": [
       {
         "codigo": "03",
-        "nombre": "San Juan",
-        "codigoPostal": "20203"
+        "nombre": "SAN JUAN"
       },
       {
         "codigo": "13",
-        "nombre": "Peñas Blancas",
-        "codigoPostal": "20213"
+        "nombre": "PEÑAS BLANCAS"
       },
       {
         "codigo": "11",
-        "nombre": "Concepción",
-        "codigoPostal": "20211"
+        "nombre": "CONCEPCIÓN"
       },
       {
         "codigo": "07",
-        "nombre": "San Isidro",
-        "codigoPostal": "20207"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "06",
-        "nombre": "San Rafael",
-        "codigoPostal": "20206"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "12",
-        "nombre": "Zapotal",
-        "codigoPostal": "20212"
+        "nombre": "ZAPOTAL"
       },
       {
         "codigo": "09",
-        "nombre": "Alfaro",
-        "codigoPostal": "20209"
+        "nombre": "ALFARO"
       },
       {
         "codigo": "02",
-        "nombre": "Santiago",
-        "codigoPostal": "20202"
+        "nombre": "SANTIAGO"
       },
       {
         "codigo": "04",
-        "nombre": "Piedades Norte",
-        "codigoPostal": "20204"
+        "nombre": "PIEDADES NORTE"
       },
       {
         "codigo": "01",
-        "nombre": "San Ramón",
-        "codigoPostal": "20201"
+        "nombre": "SAN RAMÓN"
       },
       {
         "codigo": "05",
-        "nombre": "Piedades Sur",
-        "codigoPostal": "20205"
+        "nombre": "PIEDADES SUR"
       },
       {
         "codigo": "08",
-        "nombre": "Ángeles",
-        "codigoPostal": "20208"
+        "nombre": "ÁNGELES"
       },
       {
         "codigo": "14",
-        "nombre": "San Lorenzo",
-        "codigoPostal": "20214"
+        "nombre": "SAN LORENZO"
       },
       {
         "codigo": "10",
-        "nombre": "Volio",
-        "codigoPostal": "20210"
+        "nombre": "VOLIO"
       }
     ],
     "2-03": [
       {
         "codigo": "04",
-        "nombre": "San Roque",
-        "codigoPostal": "20304"
+        "nombre": "SAN ROQUE"
       },
       {
         "codigo": "06",
-        "nombre": "Río Cuarto",
-        "codigoPostal": "20306"
+        "nombre": "RÍO CUARTO"
       },
       {
         "codigo": "07",
-        "nombre": "Puente de Piedra",
-        "codigoPostal": "20307"
+        "nombre": "PUENTE DE PIEDRA"
       },
       {
         "codigo": "02",
-        "nombre": "San Isidro",
-        "codigoPostal": "20302"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "08",
-        "nombre": "Bolivar",
-        "codigoPostal": "20308"
+        "nombre": "BOLIVAR"
       },
       {
         "codigo": "05",
-        "nombre": "Tacares",
-        "codigoPostal": "20305"
+        "nombre": "TACARES"
       },
       {
         "codigo": "03",
-        "nombre": "San Jose",
-        "codigoPostal": "20303"
+        "nombre": "SAN JOSE"
       },
       {
         "codigo": "01",
-        "nombre": "Grecia",
-        "codigoPostal": "20301"
+        "nombre": "GRECIA"
       }
     ],
     "2-04": [
       {
         "codigo": "01",
-        "nombre": "San Mateo",
-        "codigoPostal": "20401"
+        "nombre": "SAN MATEO"
       },
       {
         "codigo": "02",
-        "nombre": "Desmonte",
-        "codigoPostal": "20402"
+        "nombre": "DESMONTE"
       },
       {
         "codigo": "04",
-        "nombre": "Labrador",
-        "codigoPostal": "20404"
+        "nombre": "LABRADOR"
       },
       {
         "codigo": "03",
-        "nombre": "Jesús María",
-        "codigoPostal": "20403"
+        "nombre": "JESÚS MARÍA"
       }
     ],
     "2-05": [
       {
         "codigo": "03",
-        "nombre": "Mercedes",
-        "codigoPostal": "20503"
+        "nombre": "MERCEDES"
       },
       {
         "codigo": "04",
-        "nombre": "San Isidro",
-        "codigoPostal": "20504"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "06",
-        "nombre": "San José",
-        "codigoPostal": "20506"
+        "nombre": "SAN JOSÉ"
       },
       {
         "codigo": "02",
-        "nombre": "Jesús",
-        "codigoPostal": "20502"
+        "nombre": "JESÚS"
       },
       {
         "codigo": "05",
-        "nombre": "Concepción",
-        "codigoPostal": "20505"
+        "nombre": "CONCEPCIÓN"
       },
       {
         "codigo": "07",
-        "nombre": "Santa Eulalia",
-        "codigoPostal": "20507"
+        "nombre": "SANTA EULALIA"
       },
       {
         "codigo": "08",
-        "nombre": "Escobal",
-        "codigoPostal": "20508"
+        "nombre": "ESCOBAL"
       },
       {
         "codigo": "01",
-        "nombre": "Atenas",
-        "codigoPostal": "20501"
+        "nombre": "ATENAS"
       }
     ],
     "2-06": [
       {
         "codigo": "02",
-        "nombre": "San Miguel",
-        "codigoPostal": "20602"
+        "nombre": "SAN MIGUEL"
       },
       {
         "codigo": "07",
-        "nombre": "Rosario",
-        "codigoPostal": "20607"
+        "nombre": "ROSARIO"
       },
       {
         "codigo": "05",
-        "nombre": "San Jerónimo",
-        "codigoPostal": "20605"
+        "nombre": "SAN JERÓNIMO"
       },
       {
         "codigo": "08",
-        "nombre": "PALMITOS",
-        "codigoPostal": "20608"
+        "nombre": "PALMITOS"
       },
       {
         "codigo": "03",
-        "nombre": "San José",
-        "codigoPostal": "20603"
+        "nombre": "SAN JOSÉ"
       },
       {
         "codigo": "04",
-        "nombre": "Cirrí Sur",
-        "codigoPostal": "20604"
+        "nombre": "CIRRÍ SUR"
       },
       {
         "codigo": "01",
-        "nombre": "Naranjo",
-        "codigoPostal": "20601"
+        "nombre": "NARANJO"
       },
       {
         "codigo": "06",
-        "nombre": "San Juan",
-        "codigoPostal": "20606"
+        "nombre": "SAN JUAN"
       }
     ],
     "2-07": [
       {
         "codigo": "02",
-        "nombre": "Zaragoza",
-        "codigoPostal": "20702"
+        "nombre": "ZARAGOZA"
       },
       {
         "codigo": "06",
-        "nombre": "Esquipulas",
-        "codigoPostal": "20706"
+        "nombre": "ESQUIPULAS"
       },
       {
         "codigo": "04",
-        "nombre": "Santiago",
-        "codigoPostal": "20704"
+        "nombre": "SANTIAGO"
       },
       {
         "codigo": "01",
-        "nombre": "Palmares",
-        "codigoPostal": "20701"
+        "nombre": "PALMARES"
       },
       {
         "codigo": "05",
-        "nombre": "Candelaria",
-        "codigoPostal": "20705"
+        "nombre": "CANDELARIA"
       },
       {
         "codigo": "07",
-        "nombre": "Granja",
-        "codigoPostal": "20707"
+        "nombre": "GRANJA"
       },
       {
         "codigo": "03",
-        "nombre": "Buenos Aires",
-        "codigoPostal": "20703"
+        "nombre": "BUENOS AIRES"
       }
     ],
     "2-08": [
       {
         "codigo": "03",
-        "nombre": "San Rafael",
-        "codigoPostal": "20803"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "04",
-        "nombre": "Carrillos",
-        "codigoPostal": "20804"
+        "nombre": "CARRILLOS"
       },
       {
         "codigo": "01",
-        "nombre": "San Pedro",
-        "codigoPostal": "20801"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "05",
-        "nombre": "Sabana Redonda",
-        "codigoPostal": "20805"
+        "nombre": "SABANA REDONDA"
       },
       {
         "codigo": "02",
-        "nombre": "San Juan",
-        "codigoPostal": "20802"
+        "nombre": "SAN JUAN"
       }
     ],
     "2-09": [
       {
         "codigo": "01",
-        "nombre": "Orotina",
-        "codigoPostal": "20901"
+        "nombre": "OROTINA"
       },
       {
         "codigo": "02",
-        "nombre": "Mastate",
-        "codigoPostal": "20902"
+        "nombre": "MASTATE"
       },
       {
         "codigo": "03",
-        "nombre": "Hacienda Vieja",
-        "codigoPostal": "20903"
+        "nombre": "HACIENDA VIEJA"
       },
       {
         "codigo": "04",
-        "nombre": "Coyolar",
-        "codigoPostal": "20904"
+        "nombre": "COYOLAR"
       },
       {
         "codigo": "05",
-        "nombre": "Ceiba",
-        "codigoPostal": "20905"
+        "nombre": "CEIBA"
       }
     ],
     "2-10": [
       {
         "codigo": "02",
-        "nombre": "Florencia",
-        "codigoPostal": "21002"
+        "nombre": "FLORENCIA"
       },
       {
         "codigo": "12",
-        "nombre": "Monterrey",
-        "codigoPostal": "21012"
+        "nombre": "MONTERREY"
       },
       {
         "codigo": "08",
-        "nombre": "Tigra",
-        "codigoPostal": "21008"
+        "nombre": "TIGRA"
       },
       {
         "codigo": "06",
-        "nombre": "Pital",
-        "codigoPostal": "21006"
+        "nombre": "PITAL"
       },
       {
         "codigo": "04",
-        "nombre": "Aguas Zarcas",
-        "codigoPostal": "21004"
+        "nombre": "AGUAS ZARCAS"
       },
       {
         "codigo": "03",
-        "nombre": "Buenavista",
-        "codigoPostal": "21003"
+        "nombre": "BUENAVISTA"
       },
       {
         "codigo": "13",
-        "nombre": "Pocosol",
-        "codigoPostal": "21013"
+        "nombre": "POCOSOL"
       },
       {
         "codigo": "07",
-        "nombre": "Fortuna",
-        "codigoPostal": "21007"
+        "nombre": "FORTUNA"
       },
       {
         "codigo": "11",
-        "nombre": "Cutris",
-        "codigoPostal": "21011"
+        "nombre": "CUTRIS"
       },
       {
         "codigo": "05",
-        "nombre": "Venecia",
-        "codigoPostal": "21005"
+        "nombre": "VENECIA"
       },
       {
         "codigo": "01",
-        "nombre": "Quesada",
-        "codigoPostal": "21001"
+        "nombre": "QUESADA"
       },
       {
         "codigo": "10",
-        "nombre": "Venado",
-        "codigoPostal": "21010"
+        "nombre": "VENADO"
       },
       {
         "codigo": "09",
-        "nombre": "Palmera",
-        "codigoPostal": "21009"
+        "nombre": "PALMERA"
       }
     ],
     "2-11": [
       {
         "codigo": "07",
-        "nombre": "Brisas",
-        "codigoPostal": "21107"
+        "nombre": "BRISAS"
       },
       {
         "codigo": "06",
-        "nombre": "Zapote",
-        "codigoPostal": "21106"
+        "nombre": "ZAPOTE"
       },
       {
         "codigo": "02",
-        "nombre": "Laguna",
-        "codigoPostal": "21102"
+        "nombre": "LAGUNA"
       },
       {
         "codigo": "01",
-        "nombre": "Zarcero",
-        "codigoPostal": "21101"
+        "nombre": "ZARCERO"
       },
       {
         "codigo": "05",
-        "nombre": "Palmira",
-        "codigoPostal": "21105"
+        "nombre": "PALMIRA"
       },
       {
         "codigo": "04",
-        "nombre": "Guadalupe",
-        "codigoPostal": "21104"
+        "nombre": "GUADALUPE"
       },
       {
         "codigo": "03",
-        "nombre": "Tapezco",
-        "codigoPostal": "21103"
+        "nombre": "TAPEZCO"
       }
     ],
     "2-12": [
       {
         "codigo": "05",
-        "nombre": "Rodriguez",
-        "codigoPostal": "21205"
+        "nombre": "RODRIGUEZ"
       },
       {
         "codigo": "02",
-        "nombre": "Sarchi Sur",
-        "codigoPostal": "21202"
+        "nombre": "SARCHI SUR"
       },
       {
         "codigo": "04",
-        "nombre": "San Pedro",
-        "codigoPostal": "21204"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "01",
-        "nombre": "Sarchi Norte",
-        "codigoPostal": "21201"
+        "nombre": "SARCHI NORTE"
       },
       {
         "codigo": "03",
-        "nombre": "Toro Amarillo",
-        "codigoPostal": "21203"
+        "nombre": "TORO AMARILLO"
       }
     ],
     "2-13": [
       {
         "codigo": "06",
-        "nombre": "Dos Rios",
-        "codigoPostal": "21306"
+        "nombre": "DOS RIOS"
       },
       {
         "codigo": "04",
-        "nombre": "Bijagua",
-        "codigoPostal": "21304"
+        "nombre": "BIJAGUA"
       },
       {
         "codigo": "05",
-        "nombre": "Delicias",
-        "codigoPostal": "21305"
+        "nombre": "DELICIAS"
       },
       {
         "codigo": "07",
-        "nombre": "Yoliyllal",
-        "codigoPostal": "21307"
+        "nombre": "YOLIYLLAL"
       },
       {
         "codigo": "02",
-        "nombre": "Aguas Claras",
-        "codigoPostal": "21302"
+        "nombre": "AGUAS CLARAS"
       },
       {
         "codigo": "01",
-        "nombre": "Upala",
-        "codigoPostal": "21301"
+        "nombre": "UPALA"
       },
       {
         "codigo": "08",
-        "nombre": "Canalete",
-        "codigoPostal": "21308"
+        "nombre": "CANALETE"
       },
       {
         "codigo": "03",
-        "nombre": "San Jose (Pizote)",
-        "codigoPostal": "21303"
+        "nombre": "SAN JOSE (PIZOTE)"
       }
     ],
     "2-14": [
       {
         "codigo": "02",
-        "nombre": "Caño Negro",
-        "codigoPostal": "21402"
+        "nombre": "CAÑO NEGRO"
       },
       {
         "codigo": "04",
-        "nombre": "San Jorge",
-        "codigoPostal": "21404"
+        "nombre": "SAN JORGE"
       },
       {
         "codigo": "01",
-        "nombre": "Los Chiles",
-        "codigoPostal": "21401"
+        "nombre": "LOS CHILES"
       },
       {
         "codigo": "03",
-        "nombre": "El Amparo",
-        "codigoPostal": "21403"
+        "nombre": "EL AMPARO"
       }
     ],
     "2-15": [
       {
         "codigo": "01",
-        "nombre": "San Rafael",
-        "codigoPostal": "21501"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "03",
-        "nombre": "Cote",
-        "codigoPostal": "21503"
+        "nombre": "COTE"
       },
       {
         "codigo": "04",
-        "nombre": "KATIRA",
-        "codigoPostal": "21504"
+        "nombre": "KATIRA"
       },
       {
         "codigo": "02",
-        "nombre": "Buenavista",
-        "codigoPostal": "21502"
+        "nombre": "BUENAVISTA"
       }
     ],
     "2-16": [
       {
         "codigo": "02",
-        "nombre": "Santa Rita",
-        "codigoPostal": "21602"
+        "nombre": "SANTA RITA"
       },
       {
         "codigo": "01",
-        "nombre": "Río Cuarto",
-        "codigoPostal": "21601"
+        "nombre": "RÍO CUARTO"
       },
       {
         "codigo": "03",
-        "nombre": "Santa Isabel",
-        "codigoPostal": "21603"
+        "nombre": "SANTA ISABEL"
       }
     ],
     "3-01": [
       {
         "codigo": "03",
-        "nombre": "Carmen",
-        "codigoPostal": "30103"
+        "nombre": "CARMEN"
       },
       {
         "codigo": "02",
-        "nombre": "Occidental",
-        "codigoPostal": "30102"
+        "nombre": "OCCIDENTAL"
       },
       {
         "codigo": "10",
-        "nombre": "Llano Grande",
-        "codigoPostal": "30110"
+        "nombre": "LLANO GRANDE"
       },
       {
         "codigo": "08",
-        "nombre": "Tierra Blanca",
-        "codigoPostal": "30108"
+        "nombre": "TIERRA BLANCA"
       },
       {
         "codigo": "07",
-        "nombre": "Corralillo",
-        "codigoPostal": "30107"
+        "nombre": "CORRALILLO"
       },
       {
         "codigo": "04",
-        "nombre": "San Nicolas",
-        "codigoPostal": "30104"
+        "nombre": "SAN NICOLAS"
       },
       {
         "codigo": "11",
-        "nombre": "Quebradilla",
-        "codigoPostal": "30111"
+        "nombre": "QUEBRADILLA"
       },
       {
         "codigo": "06",
-        "nombre": "Guadalupe (Arenilla)",
-        "codigoPostal": "30106"
+        "nombre": "GUADALUPE (ARENILLA)"
       },
       {
         "codigo": "09",
-        "nombre": "Dulce Nombre",
-        "codigoPostal": "30109"
+        "nombre": "DULCE NOMBRE"
       },
       {
         "codigo": "01",
-        "nombre": "Oriental",
-        "codigoPostal": "30101"
+        "nombre": "ORIENTAL"
       },
       {
         "codigo": "05",
-        "nombre": "Aguacaliente (San Fco)",
-        "codigoPostal": "30105"
+        "nombre": "AGUACALIENTE (SAN FCO)"
       }
     ],
     "3-02": [
       {
         "codigo": "05",
-        "nombre": "Llanos de Santa Lucia",
-        "codigoPostal": "30205"
+        "nombre": "LLANOS DE SANTA LUCIA"
       },
       {
         "codigo": "01",
-        "nombre": "Paraiso",
-        "codigoPostal": "30201"
+        "nombre": "PARAISO"
       },
       {
         "codigo": "06",
-        "nombre": "Birrisito",
-        "codigoPostal": "30206"
+        "nombre": "BIRRISITO"
       },
       {
         "codigo": "02",
-        "nombre": "Santiago",
-        "codigoPostal": "30202"
+        "nombre": "SANTIAGO"
       },
       {
         "codigo": "04",
-        "nombre": "Cachi",
-        "codigoPostal": "30204"
+        "nombre": "CACHI"
       },
       {
         "codigo": "03",
-        "nombre": "Orosi",
-        "codigoPostal": "30203"
+        "nombre": "OROSI"
       }
     ],
     "3-03": [
       {
         "codigo": "01",
-        "nombre": "Tres Rios",
-        "codigoPostal": "30301"
+        "nombre": "TRES RIOS"
       },
       {
         "codigo": "03",
-        "nombre": "San Juan",
-        "codigoPostal": "30303"
+        "nombre": "SAN JUAN"
       },
       {
         "codigo": "05",
-        "nombre": "Concepcion",
-        "codigoPostal": "30305"
+        "nombre": "CONCEPCION"
       },
       {
         "codigo": "04",
-        "nombre": "San Rafael",
-        "codigoPostal": "30304"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "07",
-        "nombre": "San Ramon",
-        "codigoPostal": "30307"
+        "nombre": "SAN RAMON"
       },
       {
         "codigo": "06",
-        "nombre": "Dulce Nombre",
-        "codigoPostal": "30306"
+        "nombre": "DULCE NOMBRE"
       },
       {
         "codigo": "02",
-        "nombre": "San Diego",
-        "codigoPostal": "30302"
+        "nombre": "SAN DIEGO"
       },
       {
         "codigo": "08",
-        "nombre": "Rio Azul",
-        "codigoPostal": "30308"
+        "nombre": "RIO AZUL"
       }
     ],
     "3-04": [
       {
         "codigo": "04",
-        "nombre": "La Victoria",
-        "codigoPostal": "30404"
+        "nombre": "LA VICTORIA"
       },
       {
         "codigo": "02",
-        "nombre": "Tucurrique",
-        "codigoPostal": "30402"
+        "nombre": "TUCURRIQUE"
       },
       {
         "codigo": "01",
-        "nombre": "Juan Viñas",
-        "codigoPostal": "30401"
+        "nombre": "JUAN VIÑAS"
       },
       {
         "codigo": "03",
-        "nombre": "Pejibaye",
-        "codigoPostal": "30403"
+        "nombre": "PEJIBAYE"
       }
     ],
     "3-05": [
       {
         "codigo": "09",
-        "nombre": "Santa Rosa",
-        "codigoPostal": "30509"
+        "nombre": "SANTA ROSA"
       },
       {
         "codigo": "10",
-        "nombre": "Tres Equis",
-        "codigoPostal": "30510"
+        "nombre": "TRES EQUIS"
       },
       {
         "codigo": "11",
-        "nombre": "La Isabel",
-        "codigoPostal": "30511"
+        "nombre": "LA ISABEL"
       },
       {
         "codigo": "07",
-        "nombre": "Tuis",
-        "codigoPostal": "30507"
+        "nombre": "TUIS"
       },
       {
         "codigo": "05",
-        "nombre": "Santa Teresita",
-        "codigoPostal": "30505"
+        "nombre": "SANTA TERESITA"
       },
       {
         "codigo": "12",
-        "nombre": "Chirripo",
-        "codigoPostal": "30512"
+        "nombre": "CHIRRIPO"
       },
       {
         "codigo": "04",
-        "nombre": "Santa Cruz",
-        "codigoPostal": "30504"
+        "nombre": "SANTA CRUZ"
       },
       {
         "codigo": "02",
-        "nombre": "La Suiza",
-        "codigoPostal": "30502"
+        "nombre": "LA SUIZA"
       },
       {
         "codigo": "06",
-        "nombre": "Pavones",
-        "codigoPostal": "30506"
+        "nombre": "PAVONES"
       },
       {
         "codigo": "01",
-        "nombre": "Turrialba",
-        "codigoPostal": "30501"
+        "nombre": "TURRIALBA"
       },
       {
         "codigo": "03",
-        "nombre": "Peralta",
-        "codigoPostal": "30503"
+        "nombre": "PERALTA"
       },
       {
         "codigo": "08",
-        "nombre": "Tayutic",
-        "codigoPostal": "30508"
+        "nombre": "TAYUTIC"
       }
     ],
     "3-06": [
       {
         "codigo": "03",
-        "nombre": "Capellades",
-        "codigoPostal": "30603"
+        "nombre": "CAPELLADES"
       },
       {
         "codigo": "01",
-        "nombre": "Pacayas",
-        "codigoPostal": "30601"
+        "nombre": "PACAYAS"
       },
       {
         "codigo": "02",
-        "nombre": "Cervantes",
-        "codigoPostal": "30602"
+        "nombre": "CERVANTES"
       }
     ],
     "3-07": [
       {
         "codigo": "01",
-        "nombre": "San Rafael",
-        "codigoPostal": "30701"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "05",
-        "nombre": "Santa Rosa",
-        "codigoPostal": "30705"
+        "nombre": "SANTA ROSA"
       },
       {
         "codigo": "04",
-        "nombre": "Cipreses",
-        "codigoPostal": "30704"
+        "nombre": "CIPRESES"
       },
       {
         "codigo": "03",
-        "nombre": "Potrero Cerrado",
-        "codigoPostal": "30703"
+        "nombre": "POTRERO CERRADO"
       },
       {
         "codigo": "02",
-        "nombre": "Cote",
-        "codigoPostal": "30702"
+        "nombre": "COTE"
       }
     ],
     "3-08": [
       {
         "codigo": "04",
-        "nombre": "Patio de Agua",
-        "codigoPostal": "30804"
+        "nombre": "PATIO DE AGUA"
       },
       {
         "codigo": "02",
-        "nombre": "San Isidro",
-        "codigoPostal": "30802"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "03",
-        "nombre": "Tobosi",
-        "codigoPostal": "30803"
+        "nombre": "TOBOSI"
       },
       {
         "codigo": "01",
-        "nombre": "Tejar",
-        "codigoPostal": "30801"
+        "nombre": "TEJAR"
       }
     ],
     "4-01": [
       {
         "codigo": "05",
-        "nombre": "Varablanca",
-        "codigoPostal": "40105"
+        "nombre": "VARABLANCA"
       },
       {
         "codigo": "01",
-        "nombre": "Heredia",
-        "codigoPostal": "40101"
+        "nombre": "HEREDIA"
       },
       {
         "codigo": "03",
-        "nombre": "San Francisco",
-        "codigoPostal": "40103"
+        "nombre": "SAN FRANCISCO"
       },
       {
         "codigo": "02",
-        "nombre": "Mercedes",
-        "codigoPostal": "40102"
+        "nombre": "MERCEDES"
       },
       {
         "codigo": "04",
-        "nombre": "Ulloa",
-        "codigoPostal": "40104"
+        "nombre": "ULLOA"
       }
     ],
     "4-02": [
       {
         "codigo": "04",
-        "nombre": "San Roque",
-        "codigoPostal": "40204"
+        "nombre": "SAN ROQUE"
       },
       {
         "codigo": "05",
-        "nombre": "Santa Lucia",
-        "codigoPostal": "40205"
+        "nombre": "SANTA LUCIA"
       },
       {
         "codigo": "07",
-        "nombre": "Puente Salas",
-        "codigoPostal": "40207"
+        "nombre": "PUENTE SALAS"
       },
       {
         "codigo": "06",
-        "nombre": "San Jose de la Montaña",
-        "codigoPostal": "40206"
+        "nombre": "SAN JOSE DE LA MONTAÑA"
       },
       {
         "codigo": "03",
-        "nombre": "San Pablo",
-        "codigoPostal": "40203"
+        "nombre": "SAN PABLO"
       },
       {
         "codigo": "02",
-        "nombre": "San Pedro",
-        "codigoPostal": "40202"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "01",
-        "nombre": "Barva",
-        "codigoPostal": "40201"
+        "nombre": "BARVA"
       }
     ],
     "4-03": [
       {
         "codigo": "07",
-        "nombre": "Tures",
-        "codigoPostal": "40307"
+        "nombre": "TURES"
       },
       {
         "codigo": "03",
-        "nombre": "San Miguel",
-        "codigoPostal": "40303"
+        "nombre": "SAN MIGUEL"
       },
       {
         "codigo": "01",
-        "nombre": "Santo Domingo",
-        "codigoPostal": "40301"
+        "nombre": "SANTO DOMINGO"
       },
       {
         "codigo": "08",
-        "nombre": "Para",
-        "codigoPostal": "40308"
+        "nombre": "PARA"
       },
       {
         "codigo": "04",
-        "nombre": "Paracito",
-        "codigoPostal": "40304"
+        "nombre": "PARACITO"
       },
       {
         "codigo": "05",
-        "nombre": "Santo Tomas",
-        "codigoPostal": "40305"
+        "nombre": "SANTO TOMAS"
       },
       {
         "codigo": "06",
-        "nombre": "Santa Rosa",
-        "codigoPostal": "40306"
+        "nombre": "SANTA ROSA"
       },
       {
         "codigo": "02",
-        "nombre": "San Vicente",
-        "codigoPostal": "40302"
+        "nombre": "SAN VICENTE"
       }
     ],
     "4-04": [
       {
         "codigo": "03",
-        "nombre": "San Juan",
-        "codigoPostal": "40403"
+        "nombre": "SAN JUAN"
       },
       {
         "codigo": "01",
-        "nombre": "Santa Barbara",
-        "codigoPostal": "40401"
+        "nombre": "SANTA BARBARA"
       },
       {
         "codigo": "04",
-        "nombre": "Jesus",
-        "codigoPostal": "40404"
+        "nombre": "JESUS"
       },
       {
         "codigo": "06",
-        "nombre": "Puraba",
-        "codigoPostal": "40406"
+        "nombre": "PURABA"
       },
       {
         "codigo": "02",
-        "nombre": "San Pedro",
-        "codigoPostal": "40402"
+        "nombre": "SAN PEDRO"
       },
       {
         "codigo": "05",
-        "nombre": "Santo Domingo",
-        "codigoPostal": "40405"
+        "nombre": "SANTO DOMINGO"
       }
     ],
     "4-05": [
       {
         "codigo": "04",
-        "nombre": "angeles",
-        "codigoPostal": "40504"
+        "nombre": "ANGELES"
       },
       {
         "codigo": "02",
-        "nombre": "San Josecito",
-        "codigoPostal": "40502"
+        "nombre": "SAN JOSECITO"
       },
       {
         "codigo": "01",
-        "nombre": "San Rafael",
-        "codigoPostal": "40501"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "05",
-        "nombre": "Concepcion",
-        "codigoPostal": "40505"
+        "nombre": "CONCEPCION"
       },
       {
         "codigo": "03",
-        "nombre": "Santiago",
-        "codigoPostal": "40503"
+        "nombre": "SANTIAGO"
       }
     ],
     "4-06": [
       {
         "codigo": "03",
-        "nombre": "Concepcion",
-        "codigoPostal": "40603"
+        "nombre": "CONCEPCION"
       },
       {
         "codigo": "01",
-        "nombre": "San Isidro",
-        "codigoPostal": "40601"
+        "nombre": "SAN ISIDRO"
       },
       {
         "codigo": "02",
-        "nombre": "San Jose",
-        "codigoPostal": "40602"
+        "nombre": "SAN JOSE"
       },
       {
         "codigo": "04",
-        "nombre": "San Francisco",
-        "codigoPostal": "40604"
+        "nombre": "SAN FRANCISCO"
       }
     ],
     "4-07": [
       {
         "codigo": "01",
-        "nombre": "San Antonio",
-        "codigoPostal": "40701"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "02",
-        "nombre": "Ribera",
-        "codigoPostal": "40702"
+        "nombre": "RIBERA"
       },
       {
         "codigo": "03",
-        "nombre": "Asuncion",
-        "codigoPostal": "40703"
+        "nombre": "ASUNCION"
       }
     ],
     "4-08": [
       {
         "codigo": "02",
-        "nombre": "Barrantes",
-        "codigoPostal": "40802"
+        "nombre": "BARRANTES"
       },
       {
         "codigo": "03",
-        "nombre": "Llorente",
-        "codigoPostal": "40803"
+        "nombre": "LLORENTE"
       },
       {
         "codigo": "01",
-        "nombre": "San Joaquin de Flores",
-        "codigoPostal": "40801"
+        "nombre": "SAN JOAQUIN DE FLORES"
       }
     ],
     "4-09": [
       {
         "codigo": "02",
-        "nombre": "RINCON DE SABANILLA",
-        "codigoPostal": "40902"
+        "nombre": "RINCON DE SABANILLA"
       },
       {
         "codigo": "01",
-        "nombre": "San Pablo",
-        "codigoPostal": "40901"
+        "nombre": "SAN PABLO"
       }
     ],
     "4-10": [
       {
         "codigo": "02",
-        "nombre": "La Virgen",
-        "codigoPostal": "41002"
+        "nombre": "LA VIRGEN"
       },
       {
         "codigo": "01",
-        "nombre": "Puerto Viejo",
-        "codigoPostal": "41001"
+        "nombre": "PUERTO VIEJO"
       },
       {
         "codigo": "03",
-        "nombre": "Horquetas",
-        "codigoPostal": "41003"
+        "nombre": "HORQUETAS"
       },
       {
         "codigo": "05",
-        "nombre": "Cureña",
-        "codigoPostal": "41005"
+        "nombre": "CUREÑA"
       },
       {
         "codigo": "04",
-        "nombre": "Llanuras del Gaspar",
-        "codigoPostal": "41004"
+        "nombre": "LLANURAS DEL GASPAR"
       }
     ],
     "5-01": [
       {
         "codigo": "04",
-        "nombre": "Nacascolo",
-        "codigoPostal": "50104"
+        "nombre": "NACASCOLO"
       },
       {
         "codigo": "01",
-        "nombre": "Liberia",
-        "codigoPostal": "50101"
+        "nombre": "LIBERIA"
       },
       {
         "codigo": "05",
-        "nombre": "Curubande",
-        "codigoPostal": "50105"
+        "nombre": "CURUBANDE"
       },
       {
         "codigo": "03",
-        "nombre": "Mayorga",
-        "codigoPostal": "50103"
+        "nombre": "MAYORGA"
       },
       {
         "codigo": "02",
-        "nombre": "Cañas Dulces",
-        "codigoPostal": "50102"
+        "nombre": "CAÑAS DULCES"
       }
     ],
     "5-02": [
       {
         "codigo": "05",
-        "nombre": "Samara",
-        "codigoPostal": "50205"
+        "nombre": "SAMARA"
       },
       {
         "codigo": "04",
-        "nombre": "Quebrada Honda",
-        "codigoPostal": "50204"
+        "nombre": "QUEBRADA HONDA"
       },
       {
         "codigo": "02",
-        "nombre": "Mansion",
-        "codigoPostal": "50202"
+        "nombre": "MANSION"
       },
       {
         "codigo": "03",
-        "nombre": "San Antonio",
-        "codigoPostal": "50203"
+        "nombre": "SAN ANTONIO"
       },
       {
         "codigo": "06",
-        "nombre": "Nosara",
-        "codigoPostal": "50206"
+        "nombre": "NOSARA"
       },
       {
         "codigo": "01",
-        "nombre": "Nicoya",
-        "codigoPostal": "50201"
+        "nombre": "NICOYA"
       },
       {
         "codigo": "07",
-        "nombre": "Belen de Nosarita",
-        "codigoPostal": "50207"
+        "nombre": "BELEN DE NOSARITA"
       }
     ],
     "5-03": [
       {
         "codigo": "01",
-        "nombre": "Santa Cruz",
-        "codigoPostal": "50301"
+        "nombre": "SANTA CRUZ"
       },
       {
         "codigo": "07",
-        "nombre": "Diria",
-        "codigoPostal": "50307"
+        "nombre": "DIRIA"
       },
       {
         "codigo": "05",
-        "nombre": "Cartagena",
-        "codigoPostal": "50305"
+        "nombre": "CARTAGENA"
       },
       {
         "codigo": "09",
-        "nombre": "Tamarindo",
-        "codigoPostal": "50309"
+        "nombre": "TAMARINDO"
       },
       {
         "codigo": "02",
-        "nombre": "Bolson",
-        "codigoPostal": "50302"
+        "nombre": "BOLSON"
       },
       {
         "codigo": "03",
-        "nombre": "Veintisiete de Abril",
-        "codigoPostal": "50303"
+        "nombre": "VEINTISIETE DE ABRIL"
       },
       {
         "codigo": "04",
-        "nombre": "Tempate",
-        "codigoPostal": "50304"
+        "nombre": "TEMPATE"
       },
       {
         "codigo": "08",
-        "nombre": "Cabo Velas",
-        "codigoPostal": "50308"
+        "nombre": "CABO VELAS"
       },
       {
         "codigo": "06",
-        "nombre": "Cuajiniquil",
-        "codigoPostal": "50306"
+        "nombre": "CUAJINIQUIL"
       }
     ],
     "5-04": [
       {
         "codigo": "04",
-        "nombre": "Rio Naranjo",
-        "codigoPostal": "50404"
+        "nombre": "RIO NARANJO"
       },
       {
         "codigo": "02",
-        "nombre": "Fortuna",
-        "codigoPostal": "50402"
+        "nombre": "FORTUNA"
       },
       {
         "codigo": "03",
-        "nombre": "Mogote",
-        "codigoPostal": "50403"
+        "nombre": "MOGOTE"
       },
       {
         "codigo": "01",
-        "nombre": "Bagaces",
-        "codigoPostal": "50401"
+        "nombre": "BAGACES"
       }
     ],
     "5-05": [
       {
         "codigo": "02",
-        "nombre": "Palmira",
-        "codigoPostal": "50502"
+        "nombre": "PALMIRA"
       },
       {
         "codigo": "03",
-        "nombre": "Sardinal",
-        "codigoPostal": "50503"
+        "nombre": "SARDINAL"
       },
       {
         "codigo": "01",
-        "nombre": "Filadelfia",
-        "codigoPostal": "50501"
+        "nombre": "FILADELFIA"
       },
       {
         "codigo": "04",
-        "nombre": "Belen",
-        "codigoPostal": "50504"
+        "nombre": "BELEN"
       }
     ],
     "5-06": [
       {
         "codigo": "04",
-        "nombre": "Bebedero",
-        "codigoPostal": "50604"
+        "nombre": "BEBEDERO"
       },
       {
         "codigo": "03",
-        "nombre": "San Miguel",
-        "codigoPostal": "50603"
+        "nombre": "SAN MIGUEL"
       },
       {
         "codigo": "02",
-        "nombre": "Palmira",
-        "codigoPostal": "50602"
+        "nombre": "PALMIRA"
       },
       {
         "codigo": "05",
-        "nombre": "Porozal",
-        "codigoPostal": "50605"
+        "nombre": "POROZAL"
       },
       {
         "codigo": "01",
-        "nombre": "Cañas",
-        "codigoPostal": "50601"
+        "nombre": "CAÑAS"
       }
     ],
     "5-07": [
       {
         "codigo": "03",
-        "nombre": "San Juan",
-        "codigoPostal": "50703"
+        "nombre": "SAN JUAN"
       },
       {
         "codigo": "04",
-        "nombre": "Colorado",
-        "codigoPostal": "50704"
+        "nombre": "COLORADO"
       },
       {
         "codigo": "02",
-        "nombre": "Sierra",
-        "codigoPostal": "50702"
+        "nombre": "SIERRA"
       },
       {
         "codigo": "01",
-        "nombre": "Juntas",
-        "codigoPostal": "50701"
+        "nombre": "JUNTAS"
       }
     ],
     "5-08": [
       {
         "codigo": "01",
-        "nombre": "Tilaran",
-        "codigoPostal": "50801"
+        "nombre": "TILARAN"
       },
       {
         "codigo": "05",
-        "nombre": "Libano",
-        "codigoPostal": "50805"
+        "nombre": "LIBANO"
       },
       {
         "codigo": "02",
-        "nombre": "Quebrada Grande",
-        "codigoPostal": "50802"
+        "nombre": "QUEBRADA GRANDE"
       },
       {
         "codigo": "07",
-        "nombre": "Arenal",
-        "codigoPostal": "50807"
+        "nombre": "ARENAL"
       },
       {
         "codigo": "03",
-        "nombre": "Tronadora",
-        "codigoPostal": "50803"
+        "nombre": "TRONADORA"
       },
       {
         "codigo": "08",
-        "nombre": "Cabeceras",
-        "codigoPostal": "50808"
+        "nombre": "CABECERAS"
       },
       {
         "codigo": "06",
-        "nombre": "Tierras Morenas",
-        "codigoPostal": "50806"
+        "nombre": "TIERRAS MORENAS"
       },
       {
         "codigo": "04",
-        "nombre": "Santa Rosa",
-        "codigoPostal": "50804"
+        "nombre": "SANTA ROSA"
       }
     ],
     "5-09": [
       {
         "codigo": "02",
-        "nombre": "Santa Rita",
-        "codigoPostal": "50902"
+        "nombre": "SANTA RITA"
       },
       {
         "codigo": "05",
-        "nombre": "Porvenir",
-        "codigoPostal": "50905"
+        "nombre": "PORVENIR"
       },
       {
         "codigo": "06",
-        "nombre": "Bejuco",
-        "codigoPostal": "50906"
+        "nombre": "BEJUCO"
       },
       {
         "codigo": "01",
-        "nombre": "Carmona",
-        "codigoPostal": "50901"
+        "nombre": "CARMONA"
       },
       {
         "codigo": "03",
-        "nombre": "Zapotal",
-        "codigoPostal": "50903"
+        "nombre": "ZAPOTAL"
       },
       {
         "codigo": "04",
-        "nombre": "San Pablo",
-        "codigoPostal": "50904"
+        "nombre": "SAN PABLO"
       }
     ],
     "5-10": [
       {
         "codigo": "03",
-        "nombre": "Garita",
-        "codigoPostal": "51003"
+        "nombre": "GARITA"
       },
       {
         "codigo": "04",
-        "nombre": "Santa Elena",
-        "codigoPostal": "51004"
+        "nombre": "SANTA ELENA"
       },
       {
         "codigo": "01",
-        "nombre": "La Cruz",
-        "codigoPostal": "51001"
+        "nombre": "LA CRUZ"
       },
       {
         "codigo": "02",
-        "nombre": "Santa Cecilia",
-        "codigoPostal": "51002"
+        "nombre": "SANTA CECILIA"
       }
     ],
     "5-11": [
       {
         "codigo": "02",
-        "nombre": "Monte Romo",
-        "codigoPostal": "51102"
+        "nombre": "MONTE ROMO"
       },
       {
         "codigo": "01",
-        "nombre": "Hojancha",
-        "codigoPostal": "51101"
+        "nombre": "HOJANCHA"
       },
       {
         "codigo": "04",
-        "nombre": "Huacas",
-        "codigoPostal": "51104"
+        "nombre": "HUACAS"
       },
       {
         "codigo": "03",
-        "nombre": "Puerto Carrillo",
-        "codigoPostal": "51103"
+        "nombre": "PUERTO CARRILLO"
       },
       {
         "codigo": "05",
-        "nombre": "Matambu",
-        "codigoPostal": "51105"
+        "nombre": "MATAMBU"
       }
     ],
     "6-01": [
       {
         "codigo": "01",
-        "nombre": "Puntarenas",
-        "codigoPostal": "60101"
+        "nombre": "PUNTARENAS"
       },
       {
         "codigo": "09",
-        "nombre": "Antiguo Monte Verde",
-        "codigoPostal": "60109"
+        "nombre": "ANTIGUO MONTE VERDE"
       },
       {
         "codigo": "14",
-        "nombre": "Acapulco",
-        "codigoPostal": "60114"
+        "nombre": "ACAPULCO"
       },
       {
         "codigo": "10",
-        "nombre": "Isla del Coco",
-        "codigoPostal": "60110"
+        "nombre": "ISLA DEL COCO"
       },
       {
         "codigo": "16",
-        "nombre": "Arancibia",
-        "codigoPostal": "60116"
+        "nombre": "ARANCIBIA"
       },
       {
         "codigo": "12",
-        "nombre": "Chacarita",
-        "codigoPostal": "60112"
+        "nombre": "CHACARITA"
       },
       {
         "codigo": "07",
-        "nombre": "Guacimal",
-        "codigoPostal": "60107"
+        "nombre": "GUACIMAL"
       },
       {
         "codigo": "13",
-        "nombre": "Chira",
-        "codigoPostal": "60113"
+        "nombre": "CHIRA"
       },
       {
         "codigo": "02",
-        "nombre": "Pitahaya",
-        "codigoPostal": "60102"
+        "nombre": "PITAHAYA"
       },
       {
         "codigo": "05",
-        "nombre": "Paquera",
-        "codigoPostal": "60105"
+        "nombre": "PAQUERA"
       },
       {
         "codigo": "08",
-        "nombre": "Barranca",
-        "codigoPostal": "60108"
+        "nombre": "BARRANCA"
       },
       {
         "codigo": "06",
-        "nombre": "Manzanillo",
-        "codigoPostal": "60106"
+        "nombre": "MANZANILLO"
       },
       {
         "codigo": "04",
-        "nombre": "Lepanto",
-        "codigoPostal": "60104"
+        "nombre": "LEPANTO"
       },
       {
         "codigo": "03",
-        "nombre": "Chomes",
-        "codigoPostal": "60103"
+        "nombre": "CHOMES"
       },
       {
         "codigo": "15",
-        "nombre": "El Roble",
-        "codigoPostal": "60115"
+        "nombre": "EL ROBLE"
       },
       {
         "codigo": "11",
-        "nombre": "Cobano",
-        "codigoPostal": "60111"
+        "nombre": "COBANO"
       }
     ],
     "6-02": [
       {
         "codigo": "02",
-        "nombre": "San Juan Grande",
-        "codigoPostal": "60202"
+        "nombre": "SAN JUAN GRANDE"
       },
       {
         "codigo": "05",
-        "nombre": "San Jeronimo",
-        "codigoPostal": "60205"
+        "nombre": "SAN JERONIMO"
       },
       {
         "codigo": "06",
-        "nombre": "Caldera",
-        "codigoPostal": "60206"
+        "nombre": "CALDERA"
       },
       {
         "codigo": "03",
-        "nombre": "Macacona",
-        "codigoPostal": "60203"
+        "nombre": "MACACONA"
       },
       {
         "codigo": "04",
-        "nombre": "San Rafael",
-        "codigoPostal": "60204"
+        "nombre": "SAN RAFAEL"
       },
       {
         "codigo": "01",
-        "nombre": "Espiritu Santo",
-        "codigoPostal": "60201"
+        "nombre": "ESPIRITU SANTO"
       }
     ],
     "6-03": [
       {
         "codigo": "04",
-        "nombre": "Boruca",
-        "codigoPostal": "60304"
+        "nombre": "BORUCA"
       },
       {
         "codigo": "07",
-        "nombre": "Changena",
-        "codigoPostal": "60307"
+        "nombre": "CHANGENA"
       },
       {
         "codigo": "01",
-        "nombre": "Buenos Aires",
-        "codigoPostal": "60301"
+        "nombre": "BUENOS AIRES"
       },
       {
         "codigo": "02",
-        "nombre": "Volcan",
-        "codigoPostal": "60302"
+        "nombre": "VOLCAN"
       },
       {
         "codigo": "06",
-        "nombre": "Colinas",
-        "codigoPostal": "60306"
+        "nombre": "COLINAS"
       },
       {
         "codigo": "08",
-        "nombre": "Briolley",
-        "codigoPostal": "60308"
+        "nombre": "BRIOLLEY"
       },
       {
         "codigo": "03",
-        "nombre": "Potrero Grande",
-        "codigoPostal": "60303"
+        "nombre": "POTRERO GRANDE"
       },
       {
         "codigo": "09",
-        "nombre": "Brunka",
-        "codigoPostal": "60309"
+        "nombre": "BRUNKA"
       },
       {
         "codigo": "05",
-        "nombre": "Pilas",
-        "codigoPostal": "60305"
+        "nombre": "PILAS"
       }
     ],
     "6-04": [
       {
         "codigo": "01",
-        "nombre": "Miramar",
-        "codigoPostal": "60401"
+        "nombre": "MIRAMAR"
       },
       {
         "codigo": "02",
-        "nombre": "Union",
-        "codigoPostal": "60402"
+        "nombre": "UNION"
       },
       {
         "codigo": "03",
-        "nombre": "San Isidro",
-        "codigoPostal": "60403"
+        "nombre": "SAN ISIDRO"
       }
     ],
     "6-05": [
       {
         "codigo": "02",
-        "nombre": "Palmar",
-        "codigoPostal": "60502"
+        "nombre": "PALMAR"
       },
       {
         "codigo": "06",
-        "nombre": "BAHIA DRAKE",
-        "codigoPostal": "60506"
+        "nombre": "BAHIA DRAKE"
       },
       {
         "codigo": "03",
-        "nombre": "Sierpe",
-        "codigoPostal": "60503"
+        "nombre": "SIERPE"
       },
       {
         "codigo": "01",
-        "nombre": "Puerto Cortes",
-        "codigoPostal": "60501"
+        "nombre": "PUERTO CORTES"
       },
       {
         "codigo": "04",
-        "nombre": "Bahia Ballena",
-        "codigoPostal": "60504"
+        "nombre": "BAHIA BALLENA"
       },
       {
         "codigo": "05",
-        "nombre": "Piedras Blancas",
-        "codigoPostal": "60505"
+        "nombre": "PIEDRAS BLANCAS"
       }
     ],
     "6-06": [
       {
         "codigo": "03",
-        "nombre": "Naranjito",
-        "codigoPostal": "60603"
+        "nombre": "NARANJITO"
       },
       {
         "codigo": "01",
-        "nombre": "Quepos",
-        "codigoPostal": "60601"
+        "nombre": "QUEPOS"
       },
       {
         "codigo": "02",
-        "nombre": "Savegre",
-        "codigoPostal": "60602"
+        "nombre": "SAVEGRE"
       }
     ],
     "6-07": [
       {
         "codigo": "04",
-        "nombre": "Pavon",
-        "codigoPostal": "60704"
+        "nombre": "PAVON"
       },
       {
         "codigo": "03",
-        "nombre": "Guaycara",
-        "codigoPostal": "60703"
+        "nombre": "GUAYCARA"
       },
       {
         "codigo": "02",
-        "nombre": "Antiguo Puerto Jimenez",
-        "codigoPostal": "60702"
+        "nombre": "ANTIGUO PUERTO JIMENEZ"
       },
       {
         "codigo": "01",
-        "nombre": "Golfito",
-        "codigoPostal": "60701"
+        "nombre": "GOLFITO"
       }
     ],
     "6-08": [
       {
         "codigo": "03",
-        "nombre": "Aguabuena",
-        "codigoPostal": "60803"
+        "nombre": "AGUABUENA"
       },
       {
         "codigo": "04",
-        "nombre": "Limoncito",
-        "codigoPostal": "60804"
+        "nombre": "LIMONCITO"
       },
       {
         "codigo": "01",
-        "nombre": "San Vito",
-        "codigoPostal": "60801"
+        "nombre": "SAN VITO"
       },
       {
         "codigo": "05",
-        "nombre": "Pittier",
-        "codigoPostal": "60805"
+        "nombre": "PITTIER"
       },
       {
         "codigo": "06",
-        "nombre": "Gutierrez Brown",
-        "codigoPostal": "60806"
+        "nombre": "GUTIERREZ BROWN"
       },
       {
         "codigo": "02",
-        "nombre": "Sabalito",
-        "codigoPostal": "60802"
+        "nombre": "SABALITO"
       }
     ],
     "6-09": [
       {
         "codigo": "01",
-        "nombre": "Parrita",
-        "codigoPostal": "60901"
+        "nombre": "PARRITA"
       }
     ],
     "6-10": [
       {
         "codigo": "03",
-        "nombre": "Canoas",
-        "codigoPostal": "61003"
+        "nombre": "CANOAS"
       },
       {
         "codigo": "02",
-        "nombre": "La Cuesta",
-        "codigoPostal": "61002"
+        "nombre": "LA CUESTA"
       },
       {
         "codigo": "01",
-        "nombre": "Corredor",
-        "codigoPostal": "61001"
+        "nombre": "CORREDOR"
       },
       {
         "codigo": "04",
-        "nombre": "Laurel",
-        "codigoPostal": "61004"
+        "nombre": "LAUREL"
       }
     ],
     "6-11": [
       {
         "codigo": "03",
-        "nombre": "Lagunillas",
-        "codigoPostal": "61103"
+        "nombre": "LAGUNILLAS"
       },
       {
         "codigo": "02",
-        "nombre": "Tarcoles",
-        "codigoPostal": "61102"
+        "nombre": "TARCOLES"
       },
       {
         "codigo": "01",
-        "nombre": "Jaco",
-        "codigoPostal": "61101"
+        "nombre": "JACO"
       }
     ],
     "6-12": [
       {
         "codigo": "01",
-        "nombre": "Monteverde",
-        "codigoPostal": "61201"
+        "nombre": "MONTEVERDE"
       }
     ],
     "6-13": [
       {
         "codigo": "01",
-        "nombre": "Puerto Jimenez",
-        "codigoPostal": "61301"
+        "nombre": "PUERTO JIMENEZ"
       }
     ],
     "7-01": [
       {
         "codigo": "02",
-        "nombre": "Valle La Estrella",
-        "codigoPostal": "70102"
+        "nombre": "VALLE LA ESTRELLA"
       },
       {
         "codigo": "03",
-        "nombre": "Rio Blanco",
-        "codigoPostal": "70103"
+        "nombre": "RIO BLANCO"
       },
       {
         "codigo": "04",
-        "nombre": "Matama",
-        "codigoPostal": "70104"
+        "nombre": "MATAMA"
       },
       {
         "codigo": "01",
-        "nombre": "Limon",
-        "codigoPostal": "70101"
+        "nombre": "LIMON"
       }
     ],
     "7-02": [
       {
         "codigo": "02",
-        "nombre": "Jimenez",
-        "codigoPostal": "70202"
+        "nombre": "JIMENEZ"
       },
       {
         "codigo": "04",
-        "nombre": "Roxana",
-        "codigoPostal": "70204"
+        "nombre": "ROXANA"
       },
       {
         "codigo": "06",
-        "nombre": "Colorado",
-        "codigoPostal": "70206"
+        "nombre": "COLORADO"
       },
       {
         "codigo": "05",
-        "nombre": "Cariari",
-        "codigoPostal": "70205"
+        "nombre": "CARIARI"
       },
       {
         "codigo": "01",
-        "nombre": "Guapiles",
-        "codigoPostal": "70201"
+        "nombre": "GUAPILES"
       },
       {
         "codigo": "03",
-        "nombre": "Rita",
-        "codigoPostal": "70203"
+        "nombre": "RITA"
       },
       {
         "codigo": "07",
-        "nombre": "LA COLONIA",
-        "codigoPostal": "70207"
+        "nombre": "LA COLONIA"
       }
     ],
     "7-03": [
       {
         "codigo": "02",
-        "nombre": "Pacuarito",
-        "codigoPostal": "70302"
+        "nombre": "PACUARITO"
       },
       {
         "codigo": "07",
-        "nombre": "Reventazon",
-        "codigoPostal": "70307"
+        "nombre": "REVENTAZON"
       },
       {
         "codigo": "01",
-        "nombre": "Siquirres",
-        "codigoPostal": "70301"
+        "nombre": "SIQUIRRES"
       },
       {
         "codigo": "04",
-        "nombre": "Germania",
-        "codigoPostal": "70304"
+        "nombre": "GERMANIA"
       },
       {
         "codigo": "06",
-        "nombre": "Alegria",
-        "codigoPostal": "70306"
+        "nombre": "ALEGRIA"
       },
       {
         "codigo": "03",
-        "nombre": "Florida",
-        "codigoPostal": "70303"
+        "nombre": "FLORIDA"
       },
       {
         "codigo": "05",
-        "nombre": "Cairo",
-        "codigoPostal": "70305"
+        "nombre": "CAIRO"
       }
     ],
     "7-04": [
       {
         "codigo": "04",
-        "nombre": "Telire",
-        "codigoPostal": "70404"
+        "nombre": "TELIRE"
       },
       {
         "codigo": "01",
-        "nombre": "Bratsi",
-        "codigoPostal": "70401"
+        "nombre": "BRATSI"
       },
       {
         "codigo": "03",
-        "nombre": "Cahuita",
-        "codigoPostal": "70403"
+        "nombre": "CAHUITA"
       },
       {
         "codigo": "02",
-        "nombre": "Sixaola",
-        "codigoPostal": "70402"
+        "nombre": "SIXAOLA"
       }
     ],
     "7-05": [
       {
         "codigo": "03",
-        "nombre": "Carrandi",
-        "codigoPostal": "70503"
+        "nombre": "CARRANDI"
       },
       {
         "codigo": "02",
-        "nombre": "Battan",
-        "codigoPostal": "70502"
+        "nombre": "BATTAN"
       },
       {
         "codigo": "01",
-        "nombre": "Matina",
-        "codigoPostal": "70501"
+        "nombre": "MATINA"
       }
     ],
     "7-06": [
       {
         "codigo": "01",
-        "nombre": "Guacimo",
-        "codigoPostal": "70601"
+        "nombre": "GUACIMO"
       },
       {
         "codigo": "03",
-        "nombre": "Pocora",
-        "codigoPostal": "70603"
+        "nombre": "POCORA"
       },
       {
         "codigo": "04",
-        "nombre": "Rio Jimenez",
-        "codigoPostal": "70604"
+        "nombre": "RIO JIMENEZ"
       },
       {
         "codigo": "02",
-        "nombre": "Mercedes",
-        "codigoPostal": "70602"
+        "nombre": "MERCEDES"
       },
       {
         "codigo": "05",
-        "nombre": "Duacari",
-        "codigoPostal": "70605"
+        "nombre": "DUACARI"
       }
     ]
   }

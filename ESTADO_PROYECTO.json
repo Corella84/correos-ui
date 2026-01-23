@@ -1,0 +1,277 @@
+{
+  "catalogo_geografico": {
+    "backend_json": {
+      "archivo": "correos-backend/src/data/catalogo_geografico.json",
+      "provincias": 7,
+      "cantones": 84,
+      "distritos": 495,
+      "completo": true,
+      "estructura_valida": true,
+      "formato": "JSON con estructura: {provincias: [], cantones: {}, distritos: {}}",
+      "nota": "Catálogo completo de Costa Rica con todas las provincias, cantones y distritos oficiales"
+    },
+    "frontend_ts": {
+      "archivo": "app/data/costaRica.ts",
+      "provincias": 7,
+      "cantones": "~20 (limitado, solo para fallback)",
+      "distritos": "~30 (limitado, solo para fallback)",
+      "completo": false,
+      "proposito": "Fallback local cuando el backend no responde",
+      "nota": "Solo incluye datos básicos para desarrollo. En producción debe usar el backend."
+    },
+    "auditoria": {
+      "backend_json_valido": true,
+      "frontend_ts_valido": true,
+      "compatibilidad": "El backend usa estructura diferente (cantones y distritos como objetos con keys), pero el servicio lo normaliza",
+      "problemas_detectados": []
+    }
+  },
+  "endpoints": {
+    "backend": {
+      "base_url_local": "http://localhost:8000",
+      "base_url_produccion": "https://[TU-BACKEND].onrender.com",
+      "endpoints_disponibles": {
+        "GET /": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Endpoint de salud básico",
+          "respuesta_ejemplo": "{\"status\": \"ok\", \"service\": \"Integración Correos de Costa Rica\", \"version\": \"1.0.0\"}"
+        },
+        "GET /health": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Endpoint de salud detallado",
+          "respuesta_ejemplo": "{\"status\": \"healthy\", \"service\": \"Integración Correos de Costa Rica\"}"
+        },
+        "POST /generar_guia": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Genera guía completa (número + registro + PDF)",
+          "usa_soap": true,
+          "requiere_credenciales": true,
+          "nota": "Llama a SOAP de Correos para generar guía real"
+        },
+        "POST /catalogo_geografico": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Consulta catálogo geográfico (provincias/cantones/distritos)",
+          "usa_soap": false,
+          "fuente": "JSON estático (catalogo_geografico.json)",
+          "ejemplos": {
+            "provincias": "curl -X POST http://localhost:8000/catalogo_geografico -H 'Content-Type: application/json' -d '{\"tipo\": \"provincias\"}'",
+            "cantones": "curl -X POST http://localhost:8000/catalogo_geografico -H 'Content-Type: application/json' -d '{\"tipo\": \"cantones\", \"provincia_codigo\": \"1\"}'",
+            "distritos": "curl -X POST http://localhost:8000/catalogo_geografico -H 'Content-Type: application/json' -d '{\"tipo\": \"distritos\", \"provincia_codigo\": \"1\", \"canton_codigo\": \"01\"}'"
+          }
+        },
+        "GET /ordenes": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Endpoint mock para obtener órdenes de Shopify",
+          "nota": "En producción debe conectarse a API real de Shopify"
+        },
+        "GET /ordenes/:id": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Endpoint mock para obtener una orden específica",
+          "nota": "En producción debe conectarse a API real de Shopify"
+        },
+        "GET /correos/status/:orderKey": {
+          "existe": true,
+          "funciona": "ok",
+          "descripcion": "Endpoint mock para consultar estado en Correos",
+          "nota": "En producción debe consultar base de datos o API de Correos"
+        }
+      },
+      "cors_configurado": true,
+      "cors_origins": [
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "https://*.vercel.app",
+        "https://vercel.app",
+        "*"
+      ],
+      "nota_cors": "CORS configurado para aceptar requests desde Vercel y localhost"
+    },
+    "frontend_api": {
+      "ruta": "/api/catalogo",
+      "archivo": "app/routes/api.catalogo.tsx",
+      "funciona": "ok",
+      "descripcion": "Proxy Remix que llama al backend Python",
+      "timeout": "No configurado explícitamente (usa fetch nativo)",
+      "fallback": "El servicio correos.api.ts tiene fallback a datos locales"
+    }
+  },
+  "frontend": {
+    "configuracion": {
+      "variable_backend": "VITE_BACKEND_URL",
+      "configurada_en_vercel": "Desconocido (requiere verificación manual)",
+      "valor_por_defecto_local": "http://localhost:8000",
+      "archivos_que_usan_backend": [
+        "app/services/orders.api.ts",
+        "app/routes/api.catalogo.tsx"
+      ]
+    },
+    "selectores_geograficos": {
+      "funciona_local": "Sí (con fallback local)",
+      "funciona_produccion": "Desconocido (requiere verificación con VITE_BACKEND_URL configurado)",
+      "usa_backend": true,
+      "tiene_fallback": true,
+      "fallback_datos": "app/data/costaRica.ts (limitado a ~30 distritos)",
+      "problema_conocido": "Select de Provincia puede tener problemas de estado (bug reportado pero no confirmado en producción)"
+    },
+    "referencias_soap": {
+      "frontend": false,
+      "nota": "El frontend NO llama SOAP directamente. Solo llama al backend que internamente usa SOAP."
+    },
+    "cors": {
+      "problemas_esperados": "Ninguno si VITE_BACKEND_URL está configurado y backend tiene CORS habilitado",
+      "nota": "Backend ya tiene CORS configurado para aceptar requests de Vercel"
+    },
+    "imports_polaris": {
+      "problema_detectado": true,
+      "descripcion": "Todos los archivos de rutas usan named imports de Polaris en lugar de default import",
+      "archivos_afectados": [
+        "app/routes/_index.tsx",
+        "app/routes/orders._index.tsx",
+        "app/routes/orders.$id.review.tsx",
+        "app/routes/orders.$id.confirm.tsx",
+        "app/routes/orders.$id.result.tsx"
+      ],
+      "impacto": "Puede causar errores de carga de rutas (404) si Polaris no exporta esos componentes como named exports",
+      "fix_requerido": "Cambiar a: import Polaris from '@shopify/polaris'; const { Page, Text, ... } = Polaris;"
+    }
+  },
+  "produccion": {
+    "backend_render": {
+      "desplegado": "Desconocido (requiere verificación manual)",
+      "url": "https://[TU-BACKEND].onrender.com",
+      "estado_esperado": "Live",
+      "problemas_conocidos": [
+        "Free tier de Render: backend 'duerme' después de 15 min de inactividad",
+        "Primera request puede tardar ~30 segundos en despertar"
+      ],
+      "variables_entorno_requeridas": [
+        "CORREOS_USERNAME",
+        "CORREOS_PASSWORD",
+        "CORREOS_SISTEMA",
+        "CORREOS_USUARIO_ID",
+        "CORREOS_SERVICIO_ID",
+        "CORREOS_COD_CLIENTE",
+        "CORREOS_TOKEN_URL",
+        "CORREOS_SOAP_URL",
+        "LOG_LEVEL",
+        "TOKEN_REFRESH_BUFFER_SECONDS"
+      ]
+    },
+    "frontend_vercel": {
+      "desplegado": "Desconocido (requiere verificación manual)",
+      "url": "https://[TU-APP].vercel.app",
+      "variable_requerida": "VITE_BACKEND_URL",
+      "problemas_conocidos": [
+        "Si VITE_BACKEND_URL no está configurado, el frontend usará fallback local (datos limitados)",
+        "Imports de Polaris pueden causar errores de carga"
+      ]
+    },
+    "tests_manuales": {
+      "pasan_si_configurado": [
+        "Health check del backend responde",
+        "Catálogo de provincias carga (7 provincias)",
+        "Catálogo de cantones carga por provincia",
+        "Catálogo de distritos carga por cantón",
+        "Frontend carga sin errores de consola",
+        "Selectores geográficos funcionan",
+        "Generación de guía funciona (si credenciales válidas)"
+      ],
+      "fallan_si_no_configurado": [
+        "Frontend no puede cargar provincias (usa fallback limitado)",
+        "CORS errors si backend no tiene CORS configurado",
+        "404 en rutas si imports de Polaris están mal",
+        "Timeout si backend está 'dormido' (free tier)"
+      ]
+    }
+  },
+  "bugs": [
+    {
+      "nombre": "Imports de Polaris incorrectos",
+      "severidad": "High",
+      "donde_ocurre": "Todas las rutas de app/routes/*.tsx",
+      "evidencia": "Archivos usan: import { Page, Text } from '@shopify/polaris' en lugar de default import",
+      "requiere_para_cerrar": "Cambiar todos los imports a: import Polaris from '@shopify/polaris'; const { Page, Text, ... } = Polaris;",
+      "impacto": "Puede causar 404 en rutas si Polaris no exporta esos componentes como named exports"
+    },
+    {
+      "nombre": "Select de Provincia no cambia (bug reportado)",
+      "severidad": "Medium",
+      "donde_ocurre": "app/routes/orders.$id.review.tsx",
+      "evidencia": "Usuario reportó que el Select no refleja cambios, aunque estado se actualiza",
+      "requiere_para_cerrar": "Verificar logs de consola, posiblemente reemplazar Select de Polaris por <select> nativo si persiste",
+      "impacto": "UX degradada, usuario no puede cambiar provincia correctamente",
+      "nota": "Ya se agregaron logs de debug, requiere testing"
+    },
+    {
+      "nombre": "Variable VITE_BACKEND_URL no configurada en producción",
+      "severidad": "Blocker",
+      "donde_ocurre": "Vercel (producción)",
+      "evidencia": "Documentación indica que debe configurarse manualmente",
+      "requiere_para_cerrar": "Configurar variable en Vercel Dashboard con URL real del backend en Render",
+      "impacto": "Frontend usa fallback local (datos limitados) en lugar de backend completo"
+    },
+    {
+      "nombre": "Backend puede estar 'dormido' en free tier de Render",
+      "severidad": "Low",
+      "donde_ocurre": "Render (producción)",
+      "evidencia": "Documentación menciona que free tier duerme después de 15 min",
+      "requiere_para_cerrar": "Upgrade a plan de pago o aceptar delay de ~30s en primera request",
+      "impacto": "Primera carga lenta después de inactividad"
+    }
+  ],
+  "recomendacion": {
+    "listo_para_produccion": false,
+    "razones": [
+      "Imports de Polaris incorrectos pueden causar errores de carga",
+      "Variable VITE_BACKEND_URL debe configurarse en Vercel",
+      "Bug del Select de Provincia requiere verificación y fix",
+      "Backend en Render requiere verificación de estado y variables de entorno"
+    ],
+    "pasos_minimos_requeridos": [
+      {
+        "prioridad": "Crítica",
+        "paso": "Corregir imports de Polaris en todos los archivos de rutas",
+        "archivos": [
+          "app/routes/_index.tsx",
+          "app/routes/orders._index.tsx",
+          "app/routes/orders.$id.review.tsx",
+          "app/routes/orders.$id.confirm.tsx",
+          "app/routes/orders.$id.result.tsx"
+        ]
+      },
+      {
+        "prioridad": "Crítica",
+        "paso": "Configurar VITE_BACKEND_URL en Vercel con URL real del backend",
+        "donde": "Vercel Dashboard → Settings → Environment Variables"
+      },
+      {
+        "prioridad": "Alta",
+        "paso": "Verificar y corregir bug del Select de Provincia",
+        "como": "Revisar logs de consola, si persiste, reemplazar Select de Polaris por <select> nativo"
+      },
+      {
+        "prioridad": "Media",
+        "paso": "Verificar que backend en Render esté desplegado y funcionando",
+        "como": "curl https://[TU-BACKEND].onrender.com/health"
+      },
+      {
+        "prioridad": "Media",
+        "paso": "Verificar variables de entorno en Render",
+        "como": "Revisar Render Dashboard → Environment"
+      },
+      {
+        "prioridad": "Baja",
+        "paso": "Testing completo del flujo en producción",
+        "como": "Probar: cargar órdenes → revisar dirección → confirmar → generar guía"
+      }
+    ],
+    "tiempo_estimado": "2-4 horas para fixes críticos, 1 día para testing completo",
+    "nota_final": "El proyecto está cerca de producción pero requiere fixes críticos de imports y configuración antes de deployar."
+  }
+}
