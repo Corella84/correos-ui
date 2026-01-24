@@ -21,19 +21,13 @@ interface Order {
   rawPhone: string;
 }
 
-// Función pura y segura de cálculo de estado
+// Función pura y segura de cálculo de estado basada en validación del backend
 function calculateReviewStatus(o: any): ReviewStatus {
-  // CORRECCIÓN 1 (Estricta): Una orden NUNCA está lista si viene cruda de Shopify
-  // porque le faltan los códigos de Cantón/Distrito de Correos.
-  // Esto obliga a pasar por "Revisión" siempre.
-  if (!o.canton_code || !o.district_code) {
-    return "review_required";
+  // El backend ya validó la orden y nos dice si está lista
+  if (o.ready_for_guide === true) {
+    return "ready";
   }
-
-  const phone = String(o.shipping_address?.phone || o.customer?.phone || "").replace(/\D/g, "");
-  if (phone.length < 8) return "review_required";
-
-  return "ready";
+  return "review_required";
 }
 
 export default function OrdersIndex() {
@@ -157,10 +151,10 @@ export default function OrdersIndex() {
                       {customer} • {province}
                     </Text>
 
-                    {/* Feedback visual si faltan datos */}
-                    {isCritical && (
+                    {/* Feedback visual si requiere revisión */}
+                    {isCritical && item.validation_issues && item.validation_issues.length > 0 && (
                       <Text as="span" variant="bodySm" tone="critical">
-                        Faltan Distrito/Cantón (Correos)
+                        {item.validation_issues.join(", ")}
                       </Text>
                     )}
                   </div>
@@ -187,13 +181,29 @@ export default function OrdersIndex() {
                         </div>
                       ) : item.status === "PROCESSING" ? (
                         <Button disabled>Generando guía...</Button>
+                      ) : isReady ? (
+                        // ORDEN LISTA: Botón principal "Crear guía" + secundario "Ver/Editar"
+                        <div style={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+                          <Button
+                            variant="primary"
+                            onClick={() => navigate(`/orders/${id}/confirm?from=shopify`)}
+                          >
+                            Crear guía
+                          </Button>
+                          <Button
+                            variant="plain"
+                            onClick={() => navigate(`/orders/${id}/review`)}
+                          >
+                            Ver/Editar
+                          </Button>
+                        </div>
                       ) : (
+                        // ORDEN REQUIERE REVISIÓN: Solo "Revisar dirección"
                         <Button
-                          variant={isReady ? "primary" : undefined}
-                          tone={isCritical ? "critical" : undefined}
+                          tone="critical"
                           onClick={() => navigate(`/orders/${id}/review`)}
                         >
-                          {isCritical ? "Revisar dirección" : "Generar guía"}
+                          Revisar dirección
                         </Button>
                       )}
                     </div>

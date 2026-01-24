@@ -2,8 +2,17 @@ import { Page, Text, Card, TextField, Select, Banner, Button, Spinner } from "@s
 import { useNavigate, useParams } from "@remix-run/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { costaRica, getCantonesByProvincia, getDistritosByCanton } from "~/data/costaRica";
-import { getProvincias, getCantones, getDistritos } from "~/services/correos.api";
+import { getProvincias, getCantones, getDistritos, getBarrios } from "~/services/correos.api";
 import { getOrderById, getCorreosStatus } from "~/services/orders.api";
+
+// Tipos de envío disponibles
+type TipoEnvio = "domicilio" | "sucursal";
+
+interface Sucursal {
+  codigo_barrio: string;
+  codigo_sucursal: string;
+  nombre: string;
+}
 
 interface OrderReviewData {
   orderId: string;
@@ -37,6 +46,9 @@ interface CorreosAddressForm {
   senas: string;
   telefono: string;
   nombre: string;
+  tipoEnvio: TipoEnvio;
+  sucursalCodigo: string;
+  sucursalNombre: string;
 }
 
 export default function OrderReview() {
@@ -68,7 +80,14 @@ export default function OrderReview() {
     senas: "",
     telefono: "",
     nombre: "",
+    tipoEnvio: "domicilio",
+    sucursalCodigo: "",
+    sucursalNombre: "",
   });
+
+  // Estado para sucursales (entrega en sucursal)
+  const [sucursalesAPI, setSucursalesAPI] = useState<Sucursal[]>([]);
+  const [loadingSucursales, setLoadingSucursales] = useState(false);
 
   // Efecto para cargar datos reales
   useEffect(() => {
@@ -158,6 +177,9 @@ export default function OrderReview() {
             senas: mappedData.originalAddress.address1 || "",
             telefono: cleanedPhone,
             nombre: mappedData.customer.name || "",
+            tipoEnvio: "domicilio",
+            sucursalCodigo: "",
+            sucursalNombre: "",
           });
           formInitialized.current = true;
         }
@@ -255,6 +277,37 @@ export default function OrderReview() {
     return () => { cancelled = true; };
   }, [formData.provincia, formData.canton]);
 
+  // Cargar sucursales cuando cambia distrito y tipo de envío es "sucursal"
+  useEffect(() => {
+    if (!formData.provincia || !formData.canton || !formData.distrito) {
+      setSucursalesAPI([]);
+      return;
+    }
+
+    // Solo cargar si el tipo de envío es sucursal
+    if (formData.tipoEnvio !== "sucursal") {
+      setSucursalesAPI([]);
+      return;
+    }
+
+    let cancelled = false;
+    setLoadingSucursales(true);
+
+    getBarrios(formData.provincia, formData.canton, formData.distrito)
+      .then(data => {
+        if (!cancelled) {
+          setSucursalesAPI(data);
+        }
+      })
+      .finally(() => {
+        if (!cancelled) {
+          setLoadingSucursales(false);
+        }
+      });
+
+    return () => { cancelled = true; };
+  }, [formData.provincia, formData.canton, formData.distrito, formData.tipoEnvio]);
+
   // Opciones para selects - API primero, fallback local si API vacío
   const provinciasOptions = useMemo(() => {
     // Usar API si tiene datos, sino fallback local
@@ -304,6 +357,46 @@ export default function OrderReview() {
     ];
   }, [formData.provincia, formData.canton, distritosAPI]);
 
+  // Opciones para tipo de envío
+  const tipoEnvioOptions = [
+    { label: "Entrega a domicilio", value: "domicilio" },
+    { label: "Entrega en sucursal de Correos", value: "sucursal" },
+  ];
+
+  // Extraer sucursales ÚNICAS de los barrios (los barrios comparten sucursal)
+  const sucursalesUnicas = useMemo(() => {
+    if (sucursalesAPI.length === 0) return [];
+    
+    // Agrupar por codigo_sucursal para obtener sucursales únicas
+    const sucursalMap = new Map<string, string>();
+    sucursalesAPI.forEach((barrio) => {
+      if (barrio.codigo_sucursal && !sucursalMap.has(barrio.codigo_sucursal)) {
+        // Usar el código de sucursal como nombre (el API no da nombre de sucursal)
+        sucursalMap.set(barrio.codigo_sucursal, barrio.codigo_sucursal);
+      }
+    });
+    
+    return Array.from(sucursalMap.entries()).map(([codigo, nombre]) => ({
+      codigo,
+      nombre: `Sucursal ${codigo}`,
+    }));
+  }, [sucursalesAPI]);
+
+  // Auto-seleccionar la sucursal cuando hay al menos una disponible
+  useEffect(() => {
+    if (formData.tipoEnvio === "sucursal" && sucursalesUnicas.length > 0 && !formData.sucursalCodigo) {
+      const sucursal = sucursalesUnicas[0];
+      setFormData((prev) => ({
+        ...prev,
+        sucursalCodigo: sucursal.codigo,
+        sucursalNombre: `Sucursal ${sucursal.codigo}`,
+      }));
+    }
+  }, [sucursalesUnicas, formData.tipoEnvio, formData.sucursalCodigo]);
+
+  // Verificar si el distrito tiene sucursal disponible
+  const tieneSucursal = sucursalesUnicas.length > 0;
+
   // Validación ZIP
   const zipMismatch = useMemo(() => {
     if (formData.codigoPostal.length !== 5 || !formData.provincia || !formData.canton || !formData.distrito) {
@@ -322,13 +415,32 @@ export default function OrderReview() {
     (issue) => issue.type === "ZIP_MISMATCH"
   ) || false;
 
+  // Validación de teléfono según contrato: 8 dígitos, empieza con 2,4,5,6,7,8
+  const isPhoneValid = useMemo(() => {
+    if (formData.telefono.length !== 8) return false;
+    const firstDigit = formData.telefono.charAt(0);
+    return ['2', '4', '5', '6', '7', '8'].includes(firstDigit);
+  }, [formData.telefono]);
+
+  // Validación de señas según contrato: mínimo 10 caracteres (solo para domicilio)
+  const isSenasValid = formData.tipoEnvio === "sucursal" || formData.senas.length >= 10;
+
+  // Validación de sucursal (requerida si tipo es sucursal Y hay sucursal disponible)
+  const isSucursalValid = formData.tipoEnvio === "domicilio" || 
+    (tieneSucursal && formData.sucursalCodigo.length > 0);
+
+  // Si es sucursal pero no hay sucursal disponible, formulario inválido
+  const sucursalNoDisponible = formData.tipoEnvio === "sucursal" && !loadingSucursales && !tieneSucursal;
+
   const isFormValid = formData.codigoPostal.length === 5 &&
     formData.provincia &&
     formData.canton &&
     formData.distrito &&
-    formData.senas.length > 0 &&
-    formData.telefono.length >= 8 &&
-    formData.nombre.length > 0;
+    isSenasValid &&
+    isPhoneValid &&
+    formData.nombre.length > 0 &&
+    isSucursalValid &&
+    !sucursalNoDisponible;
 
   if (loadingOrder) {
     return (
@@ -457,10 +569,18 @@ export default function OrderReview() {
           </Banner>
         )}
 
-        {formData.telefono.length > 0 && formData.telefono.length < 8 && (
+        {formData.telefono.length > 0 && !isPhoneValid && (
           <Banner tone="critical">
             <Text as="p" variant="bodyMd">
-              El teléfono debe tener al menos 8 dígitos.
+              El teléfono debe tener exactamente 8 dígitos y empezar con 2, 4, 5, 6, 7 u 8.
+            </Text>
+          </Banner>
+        )}
+
+        {formData.senas.length > 0 && formData.senas.length < 10 && (
+          <Banner tone="warning">
+            <Text as="p" variant="bodyMd">
+              Las señas deben tener al menos 10 caracteres.
             </Text>
           </Banner>
         )}
@@ -564,27 +684,108 @@ export default function OrderReview() {
                       ...prev,
                       distrito: value || "",
                       codigoPostal: nuevoZip,
+                      sucursalCodigo: "",
+                      sucursalNombre: "",
                     }));
                   }}
                   disabled={!formData.provincia || !formData.canton || distritosOptions.length === 0 || loadingDistritos}
                 />
 
-                <TextField
-                  label="Señas finales"
-                  value={formData.senas}
-                  onChange={(value) => setFormData({ ...formData, senas: value })}
-                  multiline={4}
-                  autoComplete="street-address"
-                  helpText="Indicaciones específicas para la entrega"
+                {/* Tipo de Envío */}
+                <Select
+                  label="Tipo de Envío"
+                  options={tipoEnvioOptions}
+                  value={formData.tipoEnvio}
+                  onChange={(value) => {
+                    setFormData((prev) => ({
+                      ...prev,
+                      tipoEnvio: value as TipoEnvio,
+                      sucursalCodigo: "",
+                      sucursalNombre: "",
+                    }));
+                  }}
+                  disabled={!formData.distrito}
                 />
+
+                {/* Información de Sucursal (solo si tipo es sucursal) */}
+                {formData.tipoEnvio === "sucursal" && (
+                  <>
+                    {loadingSucursales ? (
+                      <div style={{ 
+                        padding: "1rem", 
+                        backgroundColor: "#f5f5f5", 
+                        borderRadius: "8px",
+                        textAlign: "center"
+                      }}>
+                        <Text as="p" variant="bodySm" tone="subdued">
+                          Consultando sucursales...
+                        </Text>
+                      </div>
+                    ) : !tieneSucursal ? (
+                      // NO hay sucursal disponible
+                      <div style={{ 
+                        padding: "1.5rem", 
+                        backgroundColor: "#fafafa", 
+                        borderRadius: "8px",
+                        border: "1px solid #e0e0e0",
+                        textAlign: "center"
+                      }}>
+                        <Text as="p" variant="headingMd" tone="subdued">
+                          Sin Sucursales
+                        </Text>
+                        <div style={{ marginTop: "0.5rem" }}>
+                          <Text as="p" variant="bodySm" tone="subdued">
+                            Este distrito no tiene sucursal de Correos disponible.
+                            Seleccione "Entrega a domicilio".
+                          </Text>
+                        </div>
+                      </div>
+                    ) : (
+                      // SÍ hay sucursal asignada
+                      <div style={{ 
+                        padding: "1rem", 
+                        backgroundColor: "#e8f5e9", 
+                        borderRadius: "8px",
+                        border: "1px solid #c8e6c9"
+                      }}>
+                        <div style={{ marginBottom: "0.5rem" }}>
+                          <Text as="p" variant="bodyMd" fontWeight="semibold">
+                            📦 Sucursal asignada: {sucursalesUnicas[0].codigo}
+                          </Text>
+                        </div>
+                        <Text as="p" variant="bodySm" tone="subdued">
+                          Los paquetes de esta zona se recogen en esta sucursal de Correos
+                        </Text>
+                      </div>
+                    )}
+                  </>
+                )}
+
+                {/* Señas finales (solo si tipo es domicilio) */}
+                {formData.tipoEnvio === "domicilio" && (
+                  <TextField
+                    label="Señas finales"
+                    value={formData.senas}
+                    onChange={(value) => setFormData({ ...formData, senas: value })}
+                    multiline={4}
+                    autoComplete="street-address"
+                    helpText="Indicaciones específicas para la entrega (mínimo 10 caracteres)"
+                    error={formData.senas.length > 0 && formData.senas.length < 10 ? "Mínimo 10 caracteres" : undefined}
+                  />
+                )}
 
                 <TextField
                   label="Teléfono"
                   value={formData.telefono}
-                  onChange={(value) => setFormData({ ...formData, telefono: value })}
+                  onChange={(value) => {
+                    // Solo permitir dígitos
+                    const cleaned = value.replace(/\D/g, '').slice(0, 8);
+                    setFormData({ ...formData, telefono: cleaned });
+                  }}
                   type="tel"
                   autoComplete="tel"
-                  error={formData.telefono.length > 0 && formData.telefono.length < 8 ? "Debe tener al menos 8 dígitos" : undefined}
+                  error={formData.telefono.length > 0 && !isPhoneValid ? "8 dígitos, empieza con 2,4,5,6,7,8" : undefined}
+                  helpText="Sin código de país. Ej: 88112233"
                 />
               </div>
             </div>
@@ -606,10 +807,13 @@ export default function OrderReview() {
                 provincia: formData.provincia,
                 canton: formData.canton,
                 distrito: formData.distrito,
-                senas: formData.senas,
+                senas: formData.tipoEnvio === "domicilio" ? formData.senas : "",
                 telefono: formData.telefono,
                 clienteNombre: formData.nombre,
                 clienteTelefono: formData.telefono,
+                tipoEnvio: formData.tipoEnvio,
+                sucursalCodigo: formData.sucursalCodigo,
+                sucursalNombre: formData.sucursalNombre,
               });
               navigate(`/orders/${orderId}/confirm?${params.toString()}`);
             }}

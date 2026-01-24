@@ -25,10 +25,25 @@ interface Distrito {
   codigoPostal: string;
 }
 
+interface Barrio {
+  codigo_barrio: string;
+  codigo_sucursal: string;
+  nombre: string;
+}
+
+// Respuesta según contrato v2
 interface CatalogoResponse {
-  success: boolean;
-  data: any[];
-  fuente: string;
+  status: "exito" | "error_servicio_externo";
+  tipo?: string;
+  datos?: any[];
+  provincia_codigo?: string;
+  canton_codigo?: string;
+  mensaje?: string;
+  detalle_error?: string;
+  // Legacy fields for backwards compatibility
+  success?: boolean;
+  data?: any[];
+  fuente?: string;
   error?: string;
 }
 
@@ -67,12 +82,16 @@ export async function getProvincias(): Promise<Provincia[]> {
 
     const result: CatalogoResponse = await response.json();
 
-    if (result.success && result.data) {
-      console.log(`✅ Provincias obtenidas (${result.fuente}): ${result.data.length}`);
-      return result.data as Provincia[];
+    // Contrato v2: usar status/datos, fallback a success/data para compatibilidad
+    const isSuccess = result.status === "exito" || result.success;
+    const datos = result.datos || result.data;
+
+    if (isSuccess && datos) {
+      console.log(`✅ Provincias obtenidas: ${datos.length}`);
+      return datos as Provincia[];
     }
 
-    throw new Error(result.error || "Error desconocido");
+    throw new Error(result.mensaje || result.error || "Error desconocido");
   } catch (error) {
     clearTimeout(timeoutId);
     console.error("❌ Error obteniendo provincias, usando fallback local:", error);
@@ -111,12 +130,16 @@ export async function getCantones(codigoProvincia: string): Promise<Canton[]> {
 
     const result: CatalogoResponse = await response.json();
 
-    if (result.success && result.data) {
-      console.log(`✅ Cantones obtenidos (${result.fuente}): ${result.data.length}`);
-      return result.data as Canton[];
+    // Contrato v2: usar status/datos, fallback a success/data para compatibilidad
+    const isSuccess = result.status === "exito" || result.success;
+    const datos = result.datos || result.data;
+
+    if (isSuccess && datos) {
+      console.log(`✅ Cantones obtenidos: ${datos.length}`);
+      return datos as Canton[];
     }
 
-    throw new Error(result.error || "Error desconocido");
+    throw new Error(result.mensaje || result.error || "Error desconocido");
   } catch (error) {
     clearTimeout(timeoutId);
     console.error("❌ Error obteniendo cantones, usando fallback local:", error);
@@ -162,12 +185,16 @@ export async function getDistritos(
 
     const result: CatalogoResponse = await response.json();
 
-    if (result.success && result.data) {
-      console.log(`✅ Distritos obtenidos (${result.fuente}): ${result.data.length}`);
-      return result.data as Distrito[];
+    // Contrato v2: usar status/datos, fallback a success/data para compatibilidad
+    const isSuccess = result.status === "exito" || result.success;
+    const datos = result.datos || result.data;
+
+    if (isSuccess && datos) {
+      console.log(`✅ Distritos obtenidos: ${datos.length}`);
+      return datos as Distrito[];
     }
 
-    throw new Error(result.error || "Error desconocido");
+    throw new Error(result.mensaje || result.error || "Error desconocido");
   } catch (error) {
     clearTimeout(timeoutId);
     console.error("❌ Error obteniendo distritos, usando fallback local:", error);
@@ -178,5 +205,57 @@ export async function getDistritos(
       nombre: d.nombre,
       codigoPostal: d.codigoPostal
     }));
+  }
+}
+
+/**
+ * Obtiene la lista de barrios/sucursales para un distrito específico
+ * Usado para "Entrega en Sucursal"
+ * NO tiene fallback local - solo funciona con API
+ */
+export async function getBarrios(
+  codigoProvincia: string,
+  codigoCanton: string,
+  codigoDistrito: string
+): Promise<Barrio[]> {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+
+  try {
+    console.log(`📍 Solicitando barrios/sucursales para provincia ${codigoProvincia}, cantón ${codigoCanton}, distrito ${codigoDistrito}...`);
+
+    const response = await fetch("/api/catalogo", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        tipo: "barrios",
+        provincia_codigo: codigoProvincia,
+        canton_codigo: codigoCanton,
+        distrito_codigo: codigoDistrito,
+      }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    if (!response.ok) {
+      throw new Error(`Error HTTP: ${response.status}`);
+    }
+
+    const result: CatalogoResponse = await response.json();
+
+    const isSuccess = result.status === "exito" || result.success;
+    const datos = result.datos || result.data;
+
+    if (isSuccess && datos) {
+      console.log(`✅ Barrios/sucursales obtenidos: ${datos.length}`);
+      return datos as Barrio[];
+    }
+
+    throw new Error(result.mensaje || result.error || "Error desconocido");
+  } catch (error) {
+    clearTimeout(timeoutId);
+    console.error("❌ Error obteniendo barrios/sucursales:", error);
+    return []; // No hay fallback para barrios
   }
 }

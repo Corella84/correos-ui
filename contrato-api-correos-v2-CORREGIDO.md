@@ -12,6 +12,7 @@ _Este documento es el contrato funcional y técnico entre la interfaz de usuario
 - ✅ Validación de código postal vs ubicación geográfica
 - ✅ Especificación de formato de `orden_id` de Shopify
 - ✅ Agregado endpoint opcional `/validar_direccion` para validación previa
+- ✅ **NUEVO:** Validación automática de órdenes (`ready_for_guide`) en `/ordenes`
 
 ---
 
@@ -96,6 +97,36 @@ Para distritos:
 }
 ```
 
+**Para barrios/sucursales (Entrega en Sucursal):**
+
+O para barrios (usado en "Entrega en Sucursal"):
+```json
+{
+  "tipo": "barrios",
+  "provincia_codigo": "1",
+  "canton_codigo": "01",
+  "distrito_codigo": "01"
+}
+```
+
+**Response Exitoso para barrios:**
+```json
+{
+  "status": "exito",
+  "tipo": "barrios",
+  "provincia_codigo": "1",
+  "canton_codigo": "01",
+  "distrito_codigo": "01",
+  "datos": [
+    {"codigo_barrio": "01", "codigo_sucursal": "CART", "nombre": "SAN JOSE"},
+    {"codigo_barrio": "02", "codigo_sucursal": "CART", "nombre": "BARRIO AMON"},
+    {"codigo_barrio": "03", "codigo_sucursal": "CART", "nombre": "BARRIO ARANJUEZ"}
+  ]
+}
+```
+
+**Uso en UI:** El `codigo_sucursal` se usa para identificar la sucursal de Correos donde el cliente recogerá el paquete.
+
 **Response Error (503 Service Unavailable):**
 ```json
 {
@@ -107,7 +138,125 @@ Para distritos:
 
 ---
 
-### 1.2. `POST /validar_direccion` (NUEVO - OPCIONAL)
+### 1.2. `GET /correos/status/{order_id}` (NUEVO)
+
+**Propósito:** Consultar el estado de procesamiento de una orden específica.
+
+**Cuándo se llama:**
+- Al cargar la pantalla de "Revisión de Dirección" para verificar si ya tiene guía
+- En la lista de órdenes para mostrar el estado correcto
+
+**Parámetro de ruta:**
+- `order_id`: ID de la orden (puede ser número, formato TM-XXX, o GID)
+
+**Response Exitoso (200 OK):**
+```json
+{
+  "exists": true,
+  "status": "GUIDE_CREATED",
+  "tracking_number": "CR123456789CR",
+  "processed_at": "2026-01-23T15:30:00Z"
+}
+```
+
+**Estados posibles:**
+- `GUIDE_CREATED`: Guía generada exitosamente
+- `PROCESSING`: Guía en proceso de generación
+
+**Response Error (404 Not Found):**
+```json
+{
+  "detail": "Orden no procesada"
+}
+```
+
+**Uso en UI - Lista de Órdenes:**
+
+| Estado | Badge | Botón Principal | Botón Secundario |
+|--------|-------|----------------|------------------|
+| Sin guía + `ready_for_guide: true` | 🟢 "Lista para procesar" | "Crear guía" (va a `/confirm`) | "Ver/Editar" (va a `/review`) |
+| Sin guía + `ready_for_guide: false` | 🔴 "Revisión Obligatoria" | "Revisar dirección" (va a `/review`) | - |
+| En proceso (`status === PROCESSING`) | 🔵 "En proceso..." | "Generando guía..." (disabled) | - |
+| Guía creada (`status === GUIDE_CREATED`) | 🟢 "Guía Creada" | "Ver / Descargar PDF" + "Ver seguimiento" | - |
+
+**Validación automática (`ready_for_guide`):**
+
+El backend valida cada orden automáticamente usando estos criterios:
+
+1. ✅ **Teléfono válido:** 8 dígitos, empieza con 2, 4, 5, 6, 7 u 8
+2. ✅ **Dirección con información útil:** No vacía, mínimo 20 caracteres, no solo números
+3. ⚠️ **ZIP opcional:** Puede validarse pero NO es bloqueante
+
+Si ambos criterios se cumplen, `ready_for_guide: true`, permitiendo crear la guía directamente.
+
+---
+
+### 1.3. `GET /ordenes` (NUEVO)
+
+**Propósito:** Obtener la lista de órdenes pendientes de Shopify con validación automática.
+
+**Cuándo se llama:**
+- Al cargar la pantalla de "Lista de Órdenes"
+- Para refrescar el estado de las órdenes
+
+**Response Exitoso (200 OK):**
+```json
+{
+  "success": true,
+  "orders": [
+    {
+      "id": "5847109009704",
+      "order_number": "1024",
+      "customer": {
+        "name": "Ana Rodríguez",
+        "phone": "88112233"
+      },
+      "shipping_address": {
+        "province": "San José",
+        "city": "San José",
+        "address1": "Del Pali 200 metros sur",
+        "zip": "10101",
+        "phone": "88112233"
+      },
+      "ready_for_guide": true,
+      "validation_issues": []
+    },
+    {
+      "id": "5847109009705",
+      "order_number": "1025",
+      "customer": {
+        "name": "Carlos Pérez",
+        "phone": "1234567"
+      },
+      "shipping_address": {
+        "province": "Alajuela",
+        "city": "Grecia",
+        "address1": "Casa",
+        "zip": "0000",
+        "phone": "1234567"
+      },
+      "ready_for_guide": false,
+      "validation_issues": [
+        "Teléfono no tiene 8 dígitos",
+        "Dirección muy corta o vacía"
+      ]
+    }
+  ]
+}
+```
+
+**Campos clave:**
+- `ready_for_guide` (boolean): Indica si la orden puede ir directo a confirmación o requiere revisión
+- `validation_issues` (array): Lista de problemas encontrados (vacío si `ready_for_guide: true`)
+
+**Criterios de validación automática:**
+1. ✅ **Teléfono válido:** 8 dígitos, empieza con 2, 4, 5, 6, 7 u 8
+2. ✅ **Dirección útil:** Mínimo 20 caracteres, no solo números o ceros
+3. ⚠️ **ZIP ignorado:** No se usa para determinar `ready_for_guide`
+
+---
+
+### 1.4. `POST /validar_direccion` (NUEVO - OPCIONAL)
 
 **Propósito:** Validar una dirección sin generar una guía oficial. Útil para verificar antes de la confirmación final.
 
@@ -146,13 +295,15 @@ Para distritos:
 
 ---
 
-### 1.3. `POST /generar_guia`
+### 1.5. `POST /generar_guia`
 
 **Propósito:** Generar una guía de envío oficial de Correos de Costa Rica.
 
 **Cuándo se llama:** Exclusivamente desde la pantalla de **"Confirmación Final"**, después de que el operario ha revisado y validado todos los datos.
 
 **Request - Estructura del Payload:**
+
+**Ejemplo para Entrega a Domicilio:**
 ```json
 {
   "orden_id": "gid://shopify/Order/5847109009704",
@@ -170,7 +321,36 @@ Para distritos:
     "canton_nombre": "San José",
     "distrito_codigo": "01",
     "distrito_nombre": "Carmen",
-    "senas_adicionales": "Casa esquinera color verde con portón negro"
+    "senas_adicionales": "Casa esquinera color verde con portón negro",
+    "tipo_envio": "domicilio",
+    "sucursal_codigo": null,
+    "sucursal_nombre": null
+  }
+}
+```
+
+**Ejemplo para Entrega en Sucursal:**
+```json
+{
+  "orden_id": "gid://shopify/Order/5847109009704",
+  "destinatario": {
+    "nombre_completo": "Ana Rodríguez",
+    "telefono": "88112233",
+    "email": "ana.rodriguez@email.com"
+  },
+  "direccion_original": "Del Pali 200 metros sur, casa esquinera color verde",
+  "direccion_corregida": {
+    "codigo_postal": "10101",
+    "provincia_codigo": "1",
+    "provincia_nombre": "San José",
+    "canton_codigo": "01",
+    "canton_nombre": "San José",
+    "distrito_codigo": "01",
+    "distrito_nombre": "Carmen",
+    "senas_adicionales": "Entrega en Sucursal: SAN JOSE (CART)",
+    "tipo_envio": "sucursal",
+    "sucursal_codigo": "CART",
+    "sucursal_nombre": "SAN JOSE"
   }
 }
 ```
@@ -195,9 +375,14 @@ La UI es responsable de realizar las siguientes validaciones **antes** de enviar
 | `direccion_corregida.canton_nombre` | string | Sí | Auto-llenado desde Select | No vacío. |
 | `direccion_corregida.distrito_codigo` | string | Sí | **Editable (Select)** | No vacío. Debe existir en catálogo. |
 | `direccion_corregida.distrito_nombre` | string | Sí | Auto-llenado desde Select | No vacío. |
-| `direccion_corregida.senas_adicionales` | string | Sí | **Editable (Textarea)** | No vacío. Mínimo 10 caracteres. |
+| `direccion_corregida.senas_adicionales` | string | Condicional | **Editable (Textarea)** | **Obligatorio si `tipo_envio = "domicilio"`**. Mínimo 10 caracteres. Si es sucursal, puede contener info de la sucursal. |
+| `direccion_corregida.tipo_envio` | string | Sí | **Editable (Select)** | Valores permitidos: `"domicilio"` o `"sucursal"`. |
+| `direccion_corregida.sucursal_codigo` | string | Condicional | **Editable (Select)** | **Obligatorio si `tipo_envio = "sucursal"`**. Código de sucursal obtenido de `/catalogo_geografico` tipo "barrios". |
+| `direccion_corregida.sucursal_nombre` | string | Condicional | Auto-llenado desde Select | **Obligatorio si `tipo_envio = "sucursal"`**. Nombre de la sucursal. |
 
 **VALIDACIÓN CRÍTICA:** El backend DEBE validar que el `codigo_postal` corresponda a la combinación `provincia_codigo` + `canton_codigo` + `distrito_codigo`. Si no coincide, devolver `400 Bad Request`.
+
+**NOTA SOBRE ENTREGA EN SUCURSAL:** Cuando `tipo_envio = "sucursal"`, el paquete se entrega en la sucursal de Correos indicada en `sucursal_codigo`. El cliente debe recogerlo presentando identificación.
 
 ---
 

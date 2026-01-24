@@ -1,7 +1,8 @@
 import { Page, Text, Card, Button, Banner, Spinner } from "@shopify/polaris";
 import { useNavigate, useParams, useSearchParams } from "@remix-run/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { getProvinciaByCodigo, getCantonesByProvincia, getDistritosByCanton } from "~/data/costaRica";
+import { getOrderById } from "~/services/orders.api";
 
 /**
  * CONTRATO DE DATOS - Confirmación Final
@@ -48,19 +49,100 @@ export default function OrderConfirm() {
   const params = useParams();
   const [searchParams] = useSearchParams();
   const orderId = params.id || "";
+  
+  const fromShopify = searchParams.get("from") === "shopify";
 
   const [isLoading, setIsLoading] = useState(false);
+  const [loadingOrder, setLoadingOrder] = useState(fromShopify);
   const [error, setError] = useState<string | null>(null);
-
-  // Leer datos de URL params (vienen de la pantalla de review)
-  const codigoPostal = searchParams.get("codigoPostal") || "";
-  const provinciaCodigo = searchParams.get("provincia") || "";
-  const cantonCodigo = searchParams.get("canton") || "";
-  const distritoCodigo = searchParams.get("distrito") || "";
-  const senas = searchParams.get("senas") || "";
-  const telefono = searchParams.get("telefono") || "";
-  const clienteNombre = searchParams.get("clienteNombre") || "Cliente";
-  const clienteTelefono = searchParams.get("clienteTelefono") || telefono;
+  
+  // Estados para datos que pueden venir de Shopify o de URL params
+  const [codigoPostal, setCodigoPostal] = useState(searchParams.get("codigoPostal") || "");
+  const [provinciaCodigo, setProvinciaCodigo] = useState(searchParams.get("provincia") || "");
+  const [cantonCodigo, setCantonCodigo] = useState(searchParams.get("canton") || "");
+  const [distritoCodigo, setDistritoCodigo] = useState(searchParams.get("distrito") || "");
+  const [senas, setSenas] = useState(searchParams.get("senas") || "");
+  const [telefono, setTelefono] = useState(searchParams.get("telefono") || "");
+  const [clienteNombre, setClienteNombre] = useState(searchParams.get("clienteNombre") || "Cliente");
+  const [clienteTelefono, setClienteTelefono] = useState(searchParams.get("clienteTelefono") || searchParams.get("telefono") || "");
+  const [tipoEnvio, setTipoEnvio] = useState(searchParams.get("tipoEnvio") || "domicilio");
+  const [sucursalCodigo, setSucursalCodigo] = useState(searchParams.get("sucursalCodigo") || "");
+  const [sucursalNombre, setSucursalNombre] = useState(searchParams.get("sucursalNombre") || "");
+  
+  // Cargar datos de Shopify si viene con from=shopify
+  useEffect(() => {
+    if (!fromShopify) return;
+    
+    const loadShopifyData = async () => {
+      try {
+        setLoadingOrder(true);
+        const response = await getOrderById(orderId);
+        
+        if (!response.success || !response.order) {
+          throw new Error("No se pudo cargar la orden");
+        }
+        
+        const order = response.order;
+        const shipping = order.shipping_address || {};
+        const customer = order.customer || {};
+        
+        // Inferir datos básicos
+        setClienteNombre(customer.name || "Cliente");
+        
+        // Teléfono
+        const rawPhone = shipping.phone || customer.phone || "";
+        const cleanedPhone = rawPhone.replace(/\D/g, "");
+        setTelefono(cleanedPhone);
+        setClienteTelefono(cleanedPhone);
+        
+        // Dirección
+        const address1 = shipping.address1 || "";
+        const address2 = shipping.address2 || "";
+        const fullAddress = `${address1} ${address2}`.trim();
+        setSenas(fullAddress);
+        
+        // Geografía (inferir de shipping_address)
+        const province = shipping.province || "";
+        const city = shipping.city || "";
+        
+        // Intentar mapear provincia
+        const provincias = [
+          { nombre: "San José", codigo: "1" },
+          { nombre: "Alajuela", codigo: "2" },
+          { nombre: "Cartago", codigo: "3" },
+          { nombre: "Heredia", codigo: "4" },
+          { nombre: "Guanacaste", codigo: "5" },
+          { nombre: "Puntarenas", codigo: "6" },
+          { nombre: "Limón", codigo: "7" },
+        ];
+        
+        const matchedProv = provincias.find(p => 
+          province.toLowerCase().includes(p.nombre.toLowerCase())
+        );
+        
+        if (matchedProv) {
+          setProvinciaCodigo(matchedProv.codigo);
+        }
+        
+        // ZIP
+        const rawZip = shipping.zip || "";
+        setCodigoPostal(rawZip);
+        
+        // Tipo de envío por defecto
+        setTipoEnvio("domicilio");
+        
+      } catch (err) {
+        console.error("Error cargando datos de Shopify:", err);
+        setError("No se pudieron cargar los datos de la orden. Vuelve a revisión.");
+      } finally {
+        setLoadingOrder(false);
+      }
+    };
+    
+    loadShopifyData();
+  }, [fromShopify, orderId]);
+  
+  const esSucursal = tipoEnvio === "sucursal";
 
   // Obtener nombres legibles desde el catálogo
   const provincia = getProvinciaByCodigo(provinciaCodigo);
@@ -109,10 +191,17 @@ export default function OrderConfirm() {
       // FASE 5.2: Payload real construido desde datos del formulario
       const remitenteDireccion = "Alajuela, Grecia, 800 este de la Universidad Latina";
       const remitenteCodigoPostal = "20301";
-      const destinatarioDireccion = `${senas}, ${distritoNombre}, ${cantonNombre}, ${provinciaNombre}`;
+      
+      // Dirección destino: si es sucursal, usar nombre de sucursal; si es domicilio, usar señas
+      const destinatarioDireccion = esSucursal 
+        ? `Sucursal ${sucursalNombre}, ${distritoNombre}, ${cantonNombre}, ${provinciaNombre}`
+        : `${senas}, ${distritoNombre}, ${cantonNombre}, ${provinciaNombre}`;
 
+      // Formato GID de Shopify según contrato v2
+      const shopifyGid = `gid://shopify/Order/${orderId}`;
+      
       const payload = {
-        orden_id: `TM-${orderId}`,
+        orden_id: shopifyGid,
         destinatario: {
           nombre_completo: clienteNombre,
           telefono: telefono,
@@ -127,7 +216,11 @@ export default function OrderConfirm() {
           canton_nombre: cantonNombre,
           distrito_codigo: distritoCodigo,
           distrito_nombre: distritoNombre,
-          senas_adicionales: senas,
+          senas_adicionales: esSucursal ? `Entrega en Sucursal: ${sucursalNombre} (${sucursalCodigo})` : senas,
+          // Nuevos campos para entrega en sucursal
+          tipo_envio: tipoEnvio,
+          sucursal_codigo: esSucursal ? sucursalCodigo : null,
+          sucursal_nombre: esSucursal ? sucursalNombre : null,
         },
         peso: 500.0,
         monto_flete: 0.0,
@@ -215,16 +308,24 @@ export default function OrderConfirm() {
         onAction: () => navigate(`/orders/${orderId}/review`),
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-        <Text as="p" variant="bodyMd" tone="subdued">
-          Revisa los datos antes de generar la guía oficial de Correos de Costa Rica.
-        </Text>
+      {loadingOrder ? (
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", padding: "2rem" }}>
+          <Spinner size="large" />
+          <Text as="p" variant="bodyMd" tone="subdued">
+            Cargando datos de la orden...
+          </Text>
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+          <Text as="p" variant="bodyMd" tone="subdued">
+            Revisa los datos antes de generar la guía oficial de Correos de Costa Rica.
+          </Text>
 
-        {error && (
-          <Banner tone="critical">
-            <Text as="p" variant="bodyMd">{error}</Text>
-          </Banner>
-        )}
+          {error && (
+            <Banner tone="critical">
+              <Text as="p" variant="bodyMd">{error}</Text>
+            </Banner>
+          )}
 
         <Card>
           <div style={{ padding: "1.5rem" }}>
@@ -271,8 +372,23 @@ export default function OrderConfirm() {
           <div style={{ padding: "1.5rem" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
               <Text as="h2" variant="headingMd" fontWeight="semibold">
-                Dirección de Entrega
+                {esSucursal ? "Entrega en Sucursal" : "Dirección de Entrega"}
               </Text>
+              
+              {/* Badge de tipo de envío */}
+              <div style={{ 
+                display: "inline-block", 
+                padding: "0.25rem 0.75rem", 
+                borderRadius: "4px", 
+                backgroundColor: esSucursal ? "#e3f2fd" : "#e8f5e9",
+                color: esSucursal ? "#1565c0" : "#2e7d32",
+                fontSize: "0.875rem",
+                fontWeight: "500",
+                width: "fit-content"
+              }}>
+                {esSucursal ? "📦 Retiro en Sucursal" : "🏠 Entrega a Domicilio"}
+              </div>
+
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <Text as="p" variant="bodyMd">
                   {confirmData.direccionEntrega.provincia}, {confirmData.direccionEntrega.canton}
@@ -283,11 +399,33 @@ export default function OrderConfirm() {
                 <Text as="p" variant="bodyMd">
                   Código Postal: {confirmData.direccionEntrega.codigoPostal}
                 </Text>
-                <div style={{ marginTop: "0.5rem", lineHeight: "1.6" }}>
-                  <Text as="p" variant="bodySm" tone="subdued">
-                    {confirmData.direccionEntrega.senas}
-                  </Text>
-                </div>
+                
+                {/* Mostrar sucursal si aplica */}
+                {esSucursal && sucursalNombre && (
+                  <div style={{ 
+                    marginTop: "0.5rem", 
+                    padding: "0.75rem", 
+                    backgroundColor: "#f5f5f5", 
+                    borderRadius: "4px",
+                    border: "1px solid #e0e0e0"
+                  }}>
+                    <Text as="p" variant="bodyMd" fontWeight="semibold">
+                      Sucursal: {sucursalNombre}
+                    </Text>
+                    <Text as="p" variant="bodySm" tone="subdued">
+                      Código: {sucursalCodigo}
+                    </Text>
+                  </div>
+                )}
+                
+                {/* Mostrar señas solo si es domicilio */}
+                {!esSucursal && confirmData.direccionEntrega.senas && (
+                  <div style={{ marginTop: "0.5rem", lineHeight: "1.6" }}>
+                    <Text as="p" variant="bodySm" tone="subdued">
+                      {confirmData.direccionEntrega.senas}
+                    </Text>
+                  </div>
+                )}
               </div>
               {confirmData.orderDetails?.orderNumber && (
                 <div style={{ marginTop: "1rem", paddingTop: "1rem", borderTop: "1px solid #e1e3e5" }}>
@@ -316,7 +454,8 @@ export default function OrderConfirm() {
             {isLoading ? "Generando guía..." : "Generar guía oficial"}
           </Button>
         </div>
-      </div>
+        </div>
+      )}
     </Page>
   );
 }

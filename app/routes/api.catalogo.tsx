@@ -11,17 +11,18 @@ import { json, type ActionFunctionArgs } from "@remix-run/node";
 const PYTHON_BACKEND_URL = "http://localhost:8000";
 
 interface CatalogoRequest {
-  tipo: "provincias" | "cantones" | "distritos";
+  tipo: "provincias" | "cantones" | "distritos" | "barrios";
   provincia_codigo?: string;
   canton_codigo?: string;
+  distrito_codigo?: string;
 }
 
 export async function action({ request }: ActionFunctionArgs) {
   try {
     const body: CatalogoRequest = await request.json();
-    const { tipo, provincia_codigo, canton_codigo } = body;
+    const { tipo, provincia_codigo, canton_codigo, distrito_codigo } = body;
 
-    console.log("📥 /api/catalogo:", { tipo, provincia_codigo, canton_codigo });
+    console.log("📥 /api/catalogo:", { tipo, provincia_codigo, canton_codigo, distrito_codigo });
 
     // Llamar al backend de Python
     const response = await fetch(`${PYTHON_BACKEND_URL}/catalogo_geografico`, {
@@ -33,6 +34,7 @@ export async function action({ request }: ActionFunctionArgs) {
         tipo,
         provincia_codigo,
         canton_codigo,
+        distrito_codigo,
       }),
     });
 
